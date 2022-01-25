@@ -7,7 +7,6 @@ const {
   loadUserById,
   addUser,
   uploadAvatar,
-  errorUploadAvatar,
   userLogin,
   userLogOut,
   userLogOutAll,
@@ -25,13 +24,13 @@ rootRouter.get("/me", auth, async (req, res) => {
 });
 
 rootRouter.post(
-  "/:id/uploadAvatar",
+  "/me/uploadAvatar",
+  auth,
   imgUpload.single("avatar"),
-  uploadAvatar,
-  errorUploadAvatar
+  uploadAvatar
 );
 
-rootRouter.get("/:id/avatar", loadAvatar);
+rootRouter.get("/me/avatar", auth, loadAvatar);
 
 rootRouter.post("/login", userLogin);
 

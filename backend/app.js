@@ -1,28 +1,25 @@
 require("dotenv").config();
-require("./db/mongoose");
+require("./database/mongoose");
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
-// const userRouter = require("./routes/users");
+const userRouter = require("./routes/users");
 
 const app = express();
 
-const publicPath = path.join(__dirname, "./server/frontend/build");
-const port = process.env.PORT || 8080;
+const publicPath = path.join(__dirname, "./frontend/build");
+const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 app.use(express.json());
 app.use(express.static(publicPath));
 
-// app.use("/users", userRouter);
-app.get("/users", (req, res) => {
-  res.send("ok");
-});
+app.use("/users", userRouter);
 
 app.use("*", (req, res) => {
   res.status(500).send("route is not found");
 });
 
-app.listen(port, () => {
-  console.log("Listening on port " + port);
+app.listen(PORT, () => {
+  console.log("Listening on port " + PORT);
 });

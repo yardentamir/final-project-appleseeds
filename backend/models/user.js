@@ -9,22 +9,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    credit: {
-      type: Number,
-      required: true,
-    },
-    cash: {
-      type: Number,
-      required: true,
-    },
-    isActive: {
-      type: Boolean,
-      required: true,
-    },
     email: {
       type: String,
       unique: true,
-
+      required: true,
       trim: true,
       lowercase: true,
       validate(value) {
@@ -36,6 +24,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       minlength: 7,
+      required: true,
       trim: true,
       validate(value) {
         if (value.toLowerCase().includes("password")) {
