@@ -1,15 +1,12 @@
 const express = require("express");
 const rootRouter = express.Router();
-const imgUpload = require("../middleware/img");
+const imgUpload = require("../middleware/img-upload");
 const auth = require("../middleware/auth");
 const {
   loadUsers,
   loadUserById,
   addUser,
   uploadAvatar,
-  userLogin,
-  userLogOut,
-  userLogOutAll,
   loadAvatar,
 } = require("../controllers/users/controllers");
 
@@ -31,11 +28,5 @@ rootRouter.post(
 );
 
 rootRouter.get("/me/avatar", auth, loadAvatar);
-
-rootRouter.post("/login", userLogin);
-
-rootRouter.post("/logout", auth, userLogOut);
-
-rootRouter.post("/logoutAll", auth, userLogOutAll);
 
 module.exports = rootRouter;

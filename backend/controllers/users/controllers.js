@@ -4,7 +4,7 @@ const User = require("../../models/user");
 //utils:  const removeEmptyStrings = (str):str => // some short code that returns the str with not empty strings
 //service: const updateUserToken = (_id , token )=> // some code that can throw errors and make sure that the user is updated and get a new token
 
-const { updateUser, findUserBy } = require("./utils.js");
+const { updateUser } = require("./utils.js");
 
 const addUser = async (req, res) => {
   try {
@@ -40,36 +40,39 @@ const loadUsers = async (req, res) => {
   }
 };
 
-// const uploadAvatar = async (req, res) => {
-//   const buffer = await sharp(req.file.buffer)
-//     .resize({ width: 250, height: 250 })
-//     .png()
-//     .toBuffer();
-//   console.log("buffer", buffer);
-//   req.user.avatar = buffer;
-//   console.log("the error", req.user.avatar);
-//   await req.user.save();
-//   res.send();
-// };
-
 const uploadAvatar = async (req, res) => {
   try {
-    const { id } = req.params;
-
     const buffer = await sharp(req.file.buffer)
       .resize({ width: 250, height: 250 })
       .png()
       .toBuffer();
 
-    const user = await User.findById(id);
-    user.avatar = JSON.parse(JSON.stringify(buffer));
-
-    const updatedUser = await updateUser(id, user);
-    res.status(201).send(updatedUser);
-  } catch (error) {
-    res.status(400).send({ error: error.message });
+    req.user.avatar = buffer;
+    await req.user.save();
+    res.status(201).send("upload successfully");
+  } catch (err) {
+    res.status(500).send(error.message);
   }
 };
+
+// const uploadAvatar = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+
+//     const buffer = await sharp(req.file.buffer)
+//       .resize({ width: 250, height: 250 })
+//       .png()
+//       .toBuffer();
+
+//     const user = await User.findById(id);
+//     user.avatar = JSON.parse(JSON.stringify(buffer));
+
+//     const updatedUser = await updateUser(id, user);
+//     res.status(201).send(updatedUser);
+//   } catch (error) {
+//     res.status(400).send({ error: error.message });
+//   }
+// };
 
 const loadAvatar = async (req, res) => {
   try {
@@ -82,43 +85,7 @@ const loadAvatar = async (req, res) => {
     const avatarToBase64 = user.avatar.toString("base64");
     res.status(201).send(avatarToBase64);
   } catch (error) {
-    next(res.status(404).send(error.message));
-  }
-};
-
-const userLogin = async (req, res) => {
-  try {
-    const { email, password } = req.body;
-
-    const user = await User.findByCredentials(email, password);
-    const token = await user.generateAuthToken();
-
-    res.send({ user, token });
-  } catch (error) {
-    res.status(400).send(error.response.data);
-  }
-};
-
-const userLogOut = async (req, res) => {
-  try {
-    req.user.tokens = req.user.tokens.filter((token) => {
-      return token.token !== req.token;
-    });
-
-    await req.user.save();
-    res.send();
-  } catch (error) {
-    res.status(500).send(error.response.data);
-  }
-};
-
-const userLogOutAll = async (req, res) => {
-  try {
-    req.user.tokens = [];
-    await req.user.save();
-    res.send();
-  } catch (error) {
-    res.status(500).send(error.response.data);
+    res.status(404).send(error.message);
   }
 };
 
@@ -128,7 +95,4 @@ module.exports = {
   addUser,
   uploadAvatar,
   loadAvatar,
-  userLogin,
-  userLogOut,
-  userLogOutAll,
 };

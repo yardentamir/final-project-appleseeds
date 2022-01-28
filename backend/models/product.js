@@ -16,7 +16,10 @@ const productSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  owner: {
+  picture: {
+    type: Buffer,
+  },
+  seller: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
