@@ -8,7 +8,7 @@ const {
   addUser,
   uploadAvatar,
   loadAvatar,
-} = require("../controllers/users/controllers");
+} = require("../controllers/users");
 
 rootRouter.get("/loadUsers", loadUsers);
 

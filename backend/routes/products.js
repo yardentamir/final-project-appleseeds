@@ -6,7 +6,7 @@ const {
   loadProducts,
   addProduct,
   uploadProductImg,
-} = require("../controllers/products/controllers");
+} = require("../controllers/products");
 
 rootRouter.get("/loadProducts", loadProducts);
 
@@ -16,5 +16,5 @@ rootRouter.post(
   "/me/:id/uploadProductImg",
   auth,
   imgUpload.single("product"),
-  uploadAvatar
+  uploadProductImg
 );

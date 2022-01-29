@@ -1,5 +1,5 @@
 const sharp = require("sharp");
-const Product = require("../../models/product");
+const Product = require("../models/product");
 
 const addProduct = async (req, res) => {
   try {

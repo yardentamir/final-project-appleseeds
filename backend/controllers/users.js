@@ -1,10 +1,8 @@
 const sharp = require("sharp");
-const User = require("../../models/user");
+const User = require("../models/user");
 
 //utils:  const removeEmptyStrings = (str):str => // some short code that returns the str with not empty strings
 //service: const updateUserToken = (_id , token )=> // some code that can throw errors and make sure that the user is updated and get a new token
-
-const { updateUser } = require("./utils.js");
 
 const addUser = async (req, res) => {
   try {
@@ -54,25 +52,6 @@ const uploadAvatar = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
-
-// const uploadAvatar = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     const buffer = await sharp(req.file.buffer)
-//       .resize({ width: 250, height: 250 })
-//       .png()
-//       .toBuffer();
-
-//     const user = await User.findById(id);
-//     user.avatar = JSON.parse(JSON.stringify(buffer));
-
-//     const updatedUser = await updateUser(id, user);
-//     res.status(201).send(updatedUser);
-//   } catch (error) {
-//     res.status(400).send({ error: error.message });
-//   }
-// };
 
 const loadAvatar = async (req, res) => {
   try {
