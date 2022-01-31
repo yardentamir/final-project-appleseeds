@@ -59,7 +59,7 @@ svg {
 }
 
 .wrapper {
-  min-height: 85vh;
+  min-height: 93vh;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   text-align: center;

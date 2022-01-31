@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import LogInBanner from "../../components/Banner";
 import { UserContext } from '../../context/user';
-import { Container } from '../../components/styles/Container.styled';
 import myApi from "../../api/Api";
 import "./style.css"
 
@@ -40,39 +39,32 @@ function SignIn() {
   }
 
   return (
-    <Container>
-      <div className="wrapper">
-        <div className="left">
-          <div className="left-inner">
+    <div className="wrapper">
+      <div className="left">
+        <div className="sign-in-form">
+          <h1>Sign in to Find Me</h1>
 
-            <div className="sign-in-form">
-              <h1>Sign in to Your Brand</h1>
-
-              <form>
-                <div className="form-group">
-                  <label htmlFor="email">E-mail</label>
-                  <input id="email" type="email" placeholder="@mail.com" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" onChange={handleInputChange} />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="">Password</label>
-                  <input type="password" placeholder="password" onChange={handleInputChange} />
-                </div>
-                <div className="form-group">
-                  <button onClick={login}>SIGN IN</button>
-                </div>
-                <div className="create-aacount">
-                  Not registered yet? <Link to="/SignUp"> Create an Account</Link>
-                </div>
-              </form>
+          <form>
+            <div className="form-group">
+              <label htmlFor="email">E-mail</label>
+              <input id="email" type="email" placeholder="@mail.com" onChange={handleInputChange} />
             </div>
-          </div>
-        </div>
-        <div className="right">
-          <LogInBanner />
+            <div className="form-group">
+              <label htmlFor="">Password</label>
+              <input type="password" placeholder="password" onChange={handleInputChange} />
+            </div>
+            <div className="form-group">
+              <button onClick={login}>SIGN IN</button>
+            </div>
+            <div className="create-aacount">
+              Not registered yet? <Link to="/SignUp"> Create an Account</Link>
+            </div>
+          </form>
         </div>
       </div>
+      <LogInBanner />
+    </div>
 
-    </Container>
   );
 }
 

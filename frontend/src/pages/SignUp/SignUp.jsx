@@ -1,46 +1,55 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Container } from '../../components/styles/Container.styled';
+import myApi from "../../api/Api";
 import SignUpBanner from "../../components/Banner";
+import FromGroup from "../../components/FormGroup"
 import "./style.css";
+
 
 function SignUp() {
 
+  const [newUser, setNewUser] = useState({});
+
+  const AddUser = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await myApi.post("/users/addUser", newUser);
+      if (data) console.log("added user successfully")
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+
+  const handleInputChange = ({ target: { name, value } }) => {
+    setNewUser({ ...newUser, [name]: value });
+  }
+
+  const renderInputs = () => {
+    const keys = [{ name: "name", type: "text" }, { name: "email", type: "email" }, { name: "password", type: "password" }];
+    return keys.map(item => {
+      return <FromGroup key={item.name} text={item.name} name={item.name} type={item.type} callback={handleInputChange} />
+    })
+  }
+
   return (
-    <Container>
-      <div className="wrapper">
-        <div className="left">
-          <div className="sign-up-form">
-            <h1>Sign up to Your Brand</h1>
+    <div className="wrapper">
+      <div className="left">
+        <div className="sign-up-form">
+          <h1>Sign up to Find Me</h1>
 
-            <form action="">
-              <div className="form-group">
-                <label htmlFor="">Name Surname</label>
-                <input type="input" placeholder="Name Surname" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="">E-mail</label>
-                <input type="email" placeholder="@mail.com" />
-              </div>
-              <div className="form-group">
-                <label htmlFor="">Password</label>
-                <input type="password" placeholder="password" />
-
-              </div>
-              <div className="form-group">
-                <button>SIGN UP</button>
-              </div>
-              <div className="create-aacount">
-                Already registered? <Link to="/SignIn"> Sign In</Link>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div className="right">
-          <SignUpBanner />
+          <form onSubmit={AddUser}>
+            {renderInputs()}
+            <div className="form-group">
+              <button>SIGN UP</button>
+            </div>
+            <div className="create-aacount">
+              Already registered? <Link to="/SignIn">Sign In</Link>
+            </div>
+          </form>
         </div>
       </div>
-    </Container>
+      <SignUpBanner />
+    </div>
   );
 }
 
