@@ -1,22 +1,16 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
-import Home from "./pages/Home";
 import Header from "./components/Header";
-import SignIn from "./pages/SignIn/SignIn";
-import SignUp from "./pages/SignUp/SignUp";
-import { UserProvider } from "./context/user";
+import { UserProvider } from "./providers/user";
+import Routes from "./routes/routes";
 
 function App() {
   return (
     <BrowserRouter>
       <UserProvider>
         <Header />
-        <Routes>
-          <Route path="/" exact element={<Home />} />
-          <Route path="/SignIn" exact element={<SignIn />} />
-          <Route path="/SignUp" exact element={<SignUp />} />
-        </Routes>
+        <Routes />
       </UserProvider>
     </BrowserRouter>
   );

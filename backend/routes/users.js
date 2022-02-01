@@ -8,6 +8,9 @@ const {
   addUser,
   uploadAvatar,
   loadAvatar,
+  userLogin,
+  userLogOut,
+  userLogOutAll,
 } = require("../controllers/users");
 
 rootRouter.get("/loadUsers", loadUsers);
@@ -28,5 +31,11 @@ rootRouter.post(
 );
 
 rootRouter.get("/me/avatar", auth, loadAvatar);
+
+rootRouter.post("/login", userLogin);
+
+rootRouter.post("/logout", auth, userLogOut);
+
+rootRouter.post("/logoutAll", auth, userLogOutAll);
 
 module.exports = rootRouter;

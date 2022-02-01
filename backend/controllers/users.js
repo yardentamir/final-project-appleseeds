@@ -68,10 +68,49 @@ const loadAvatar = async (req, res) => {
   }
 };
 
+const userLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findByCredentials(email, password);
+    const token = await user.generateAuthToken();
+    console.log({ user, token });
+    res.send({ user, token });
+  } catch (error) {
+    res.status(400).send(error.response.data);
+  }
+};
+
+const userLogOut = async (req, res) => {
+  try {
+    req.user.tokens = req.user.tokens.filter((token) => {
+      return token.token !== req.token;
+    });
+    await req.user.save();
+
+    res.send("log out successfully!");
+  } catch (error) {
+    res.status(500).send(error.response.data);
+  }
+};
+
+const userLogOutAll = async (req, res) => {
+  try {
+    req.user.tokens = [];
+    await req.user.save();
+    res.send();
+  } catch (error) {
+    res.status(500).send(error.response.data);
+  }
+};
+
 module.exports = {
   loadUsers,
   loadUserById,
   addUser,
   uploadAvatar,
   loadAvatar,
+  userLogin,
+  userLogOut,
+  userLogOutAll,
 };

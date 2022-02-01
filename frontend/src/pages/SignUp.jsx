@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import myApi from "../../api/Api";
-import SignUpBanner from "../../components/Banner";
-import FromGroup from "../../components/FormGroup"
-import "./style.css";
+import myApi from "../api/Api";
+import SignUpBanner from "../components/Banner";
+import FromGroup from "../components/FormGroup"
+import "./styles/Sign.css";
 
 
 function SignUp() {
@@ -48,7 +48,9 @@ function SignUp() {
           </form>
         </div>
       </div>
-      <SignUpBanner />
+      <div className="right">
+        <SignUpBanner />
+      </div>
     </div>
   );
 }

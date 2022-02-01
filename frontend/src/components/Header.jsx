@@ -1,14 +1,12 @@
 
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import React, { useContext, useState } from 'react';
-import { UserContext } from '../context/user';
+import { UserContext } from '../providers/user';
 import "./styles/Header.css";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  // const [selectedNavItem, setSelectedNavItem] = useState('Home');
-  const { userToken } = useContext(UserContext);
-
+  const { user } = useContext(UserContext);
 
   return (
     <header className="header">
@@ -22,7 +20,7 @@ function Header() {
           <ion-icon name="close-outline" onClick={() => setIsOpen(false)} class="nav__close" id="nav-close"></ion-icon>
 
           {
-            userToken ?
+            user ?
               <>
                 <div className="nav__perfil">
                   <div className="nav__img">
@@ -30,7 +28,7 @@ function Header() {
                   </div>
 
                   <div>
-                    <a href="#" className="nav__name">iilhamriz</a>
+                    <Link to="/UpdateUser">{user.name}</Link>
                   </div>
                 </div>
               </>
@@ -38,7 +36,6 @@ function Header() {
               <>
                 <div className="nav__perfil">
                   <div className="nav__img">
-                    <p></p>
                   </div>
 
                   <div>
@@ -51,9 +48,15 @@ function Header() {
 
           <div className="nav__menu">
             <ul className="nav__list">
-              <li className="nav__item"><Link to="/" className="nav__link active">Home</Link></li>
-              <li className="nav__item"><a href="#" className="nav__link">About</a></li>
-              <li className="nav__item"><a href="#" className="nav__link">Skills</a></li>
+              <li className="nav__item">
+                <NavLink to="/" name="Home" className={`nav__link`}>Home</NavLink>
+              </li>
+              <li className="nav__item">
+                <NavLink to="/SignIn" name="About" className="nav__link" >About</NavLink>
+              </li>
+              <li className="nav__item">
+                <NavLink to="/SignUp" name="Skills" className="nav__link" >Skills</NavLink>
+              </li>
             </ul>
           </div>
 
