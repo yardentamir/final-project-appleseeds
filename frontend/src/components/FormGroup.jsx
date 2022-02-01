@@ -1,10 +1,10 @@
 import React from 'react';
 
-function FormGroup({ text, callback, name, type }) {
+function FormGroup({ name, ...attributes }) {
   return (
     <div className="form-group">
-      <label htmlFor={text}>{text}</label>
-      <input id={text} type={type} placeholder={text} name={name} onChange={callback} required />
+      <label htmlFor={name}>{name}</label>
+      <input {...attributes} name={name} placeholder={name} />
     </div>
   );
 }

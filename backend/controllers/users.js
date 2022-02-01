@@ -18,26 +18,6 @@ const addUser = async (req, res) => {
   }
 };
 
-const loadUserById = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const user = await User.findById(id);
-    res.status(201).send(user);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-};
-
-const loadUsers = async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(201).send(users);
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-};
-
 const uploadAvatar = async (req, res) => {
   try {
     const buffer = await sharp(req.file.buffer)
@@ -55,33 +35,29 @@ const uploadAvatar = async (req, res) => {
 
 const loadAvatar = async (req, res) => {
   try {
-    const { id } = req.params;
-    const user = await User.findById(id);
-
-    if (!user.avatar) throw new Error("no avatar image");
+    if (!req.user.avatar) throw new Error("no avatar image");
     res.set("Content-Type", "image/png");
 
-    const avatarToBase64 = user.avatar.toString("base64");
+    const avatarToBase64 = req.user.avatar.toString("base64");
     res.status(201).send(avatarToBase64);
   } catch (error) {
-    res.status(404).send(error.message);
+    res.status(404).send(error.response.data);
   }
 };
 
-const userLogin = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
     const user = await User.findByCredentials(email, password);
     const token = await user.generateAuthToken();
-    console.log({ user, token });
     res.send({ user, token });
   } catch (error) {
     res.status(400).send(error.response.data);
   }
 };
 
-const userLogOut = async (req, res) => {
+const logOut = async (req, res) => {
   try {
     req.user.tokens = req.user.tokens.filter((token) => {
       return token.token !== req.token;
@@ -94,7 +70,7 @@ const userLogOut = async (req, res) => {
   }
 };
 
-const userLogOutAll = async (req, res) => {
+const logOutAll = async (req, res) => {
   try {
     req.user.tokens = [];
     await req.user.save();
@@ -104,13 +80,25 @@ const userLogOutAll = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const userBody = req.body;
+    // const updatedUser = await User.findByIdAndUpdate(req.user._id, userBody);
+    req.user = userBody;
+
+    await req.user.save();
+    res.send(req.user);
+  } catch (error) {
+    res.status(500).send(error.response.data);
+  }
+};
+
 module.exports = {
-  loadUsers,
-  loadUserById,
   addUser,
   uploadAvatar,
   loadAvatar,
-  userLogin,
-  userLogOut,
-  userLogOutAll,
+  login,
+  logOut,
+  logOutAll,
+  updateUser,
 };

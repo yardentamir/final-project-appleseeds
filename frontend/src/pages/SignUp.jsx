@@ -1,20 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import myApi from "../api/Api";
+import { UserContext } from '../providers/user';
 import SignUpBanner from "../components/Banner";
-import FromGroup from "../components/FormGroup"
+import FromGroup from "../components/FormGroup";
 import "./styles/Sign.css";
+import { INPUT_ATTRIBUTES } from '../constants/signUp.constants';
 
 
 function SignUp() {
 
+  const { setToken, token } = useContext(UserContext);
   const [newUser, setNewUser] = useState({});
+  const [avatar, setAvatar] = useState("");
+  const [image, setImage] = useState("");
+
+  const imageUploadRef = useRef(null);
 
   const AddUser = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await myApi.post("/users/addUser", newUser);
-      if (data) console.log("added user successfully")
+      setToken('');
+      const { data: { token } } = await myApi.post("/users/addUser", newUser);
+      setToken(token);
     } catch (error) {
       console.log(error.response.data);
     }
@@ -24,12 +32,58 @@ function SignUp() {
     setNewUser({ ...newUser, [name]: value });
   }
 
-  const renderInputs = () => {
-    const keys = [{ name: "name", type: "text" }, { name: "email", type: "email" }, { name: "password", type: "password" }];
-    return keys.map(item => {
-      return <FromGroup key={item.name} text={item.name} name={item.name} type={item.type} callback={handleInputChange} />
-    })
+
+  const addAvatar = useCallback(async () => {
+    try {
+      const data = new FormData();
+      data.append("avatar", avatar);
+      await myApi.post("/users/me/uploadAvatar", data, {
+        headers: {
+          'Content-Type': "application/json",
+          'Authorization': `Bearer ${token}`
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
+  }, [avatar, token])
+
+  const fileUpload = (e) => {
+    e.preventDefault();
+    const fileReader = new FileReader();
+    const file = e.target.files[0]; // e.target.files -> returns Array of Objects.
+    fileReader.readAsDataURL(file);
+    setAvatar(file)
+    fileReader.onload = ({ target: { result } }) => {
+      setImage(result)
+    }
+  };
+
+  const renderInputs = () => INPUT_ATTRIBUTES.map(inputAttr => {
+    return <FromGroup key={inputAttr.id} {...inputAttr} onChange={handleInputChange} />
+  })
+
+
+
+  const onSubmit = async (event) => {
+    try {
+      event.preventDefault();
+      await AddUser(event)
+
+
+    } catch (err) {
+      console.log(err);
+    }
   }
+
+
+  useEffect(() => {
+    async function avatar() {
+      await addAvatar()
+    }
+    if (token && avatar) avatar();
+  }, [addAvatar, token, avatar])
 
   return (
     <div className="wrapper">
@@ -37,8 +91,13 @@ function SignUp() {
         <div className="sign-up-form">
           <h1>Sign up to Find Me</h1>
 
-          <form onSubmit={AddUser}>
+          <form onSubmit={onSubmit}>
             {renderInputs()}
+            <input type="file" ref={imageUploadRef} id="mediaFile" accept="image/png, image/jpeg" onChange={fileUpload} />
+            <div id="profile" onClick={() => imageUploadRef.current.click()} style={{ backgroundImage: "url(" + image + ")" }}>
+              <div className="dashes"></div>
+              <label className={image && "hasImage"}>Click to browse an avatar image</label>
+            </div>
             <div className="form-group">
               <button>SIGN UP</button>
             </div>

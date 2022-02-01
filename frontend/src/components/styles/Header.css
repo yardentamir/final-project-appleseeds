@@ -51,9 +51,10 @@ a {
   text-decoration: none;
 }
 
-img {
+.nav__img img {
   max-width: 100%;
   height: auto;
+  clip-path: circle();
 }
 
 .bd-grid {
@@ -127,7 +128,6 @@ img {
 .nav__img {
   display: flex;
   justify-content: center;
-  padding-top: 0.25rem;
   margin-bottom: 0.8rem;
   width: 56px;
   height: 56px;
@@ -136,9 +136,9 @@ img {
   overflow: hidden;
 }
 
-.nav__img img {
+/* .nav__img img {
   width: 46px;
-}
+} */
 
 .nav__name {
   display: block;
@@ -210,9 +210,9 @@ img {
     margin-bottom: 0;
     align-items: center;
   }
-  .nav__img img {
+  /* .nav__img img {
     width: 26px;
-  }
+  } */
   .nav__list {
     display: flex;
   }

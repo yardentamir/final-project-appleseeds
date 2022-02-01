@@ -1,4 +1,4 @@
-import React, { useState, useContext, } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import myApi from "../api/Api";
 import SignUpBanner from "../components/Banner";
@@ -10,13 +10,31 @@ import "./styles/Sign.css";
 function SignUp() {
 
   const navigate = useNavigate();
-  const [newUserDetails, setNewUserDetails] = useState({});
+  const [currentUserBody, setCurrentUserBody] = useState({});
+  const [newUserBody, setNewUserBody] = useState({});
   const { token, setUser, setToken } = useContext(UserContext);
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const { data } = await myApi.get("/users/me", {
+          headers: {
+            'Content-Type': "application/json",
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        setCurrentUserBody(data);
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    }
+    getUser();
+  }, [token])
 
   const updateUser = async (e) => {
     e.preventDefault();
     try {
-      await myApi.put("/users/addUser", newUserDetails);
+      await myApi.put("/users/updateUser", newUserBody);
       console.log("added user successfully")
     } catch (error) {
       console.log(error.response.data);
@@ -49,19 +67,21 @@ function SignUp() {
       });
       setUser('');
       setToken('');
+      navigate("/SignIn");
     } catch (err) {
       console.log(err);
     }
   }
 
+
   const handleInputChange = ({ target: { name, value } }) => {
-    setNewUserDetails({ ...newUserDetails, [name]: value });
+    setNewUserBody({ ...newUserBody, [name]: value });
   }
 
   const renderInputs = () => {
     const keys = [{ name: "name", type: "text" }, { name: "email", type: "email" }, { name: "password", type: "password" }];
     return keys.map(item => {
-      return <FromGroup key={item.name} text={item.name} name={item.name} type={item.type} callback={handleInputChange} />
+      return <FromGroup key={item.name} text={item.name} name={item.name} type={item.type} callback={handleInputChange}>{currentUserBody}</FromGroup>
     })
   }
 

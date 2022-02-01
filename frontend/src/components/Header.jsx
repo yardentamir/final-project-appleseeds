@@ -1,12 +1,35 @@
 
 import { Link, NavLink } from 'react-router-dom';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../providers/user';
+import myApi from "../api/Api";
 import "./styles/Header.css";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, token } = useContext(UserContext);
+  const [avatar, setAvatar] = useState('');
+
+  useEffect(() => {
+    console.log("in header token: " + token);
+    const loadAvatar = async () => {
+      try {
+        const { data } = await myApi.get("/users/me/avatar", {
+          headers: {
+            'Content-Type': "application/json",
+            'Authorization': `Bearer ${token}`
+          }
+        }
+        );
+        setAvatar(data);
+        console.log("the data: " + data);
+      } catch (err) {
+        console.log("error")
+        console.log(err)
+      }
+    }
+    loadAvatar();
+  }, [token])
 
   return (
     <header className="header">
@@ -24,7 +47,7 @@ function Header() {
               <>
                 <div className="nav__perfil">
                   <div className="nav__img">
-                    <img src="assets/img/perfil.png" alt="" />
+                    <img src={avatar && `data:image/png;base64,${avatar}`} alt="avatar" />
                   </div>
 
                   <div>
@@ -52,10 +75,10 @@ function Header() {
                 <NavLink to="/" name="Home" className={`nav__link`}>Home</NavLink>
               </li>
               <li className="nav__item">
-                <NavLink to="/SignIn" name="About" className="nav__link" >About</NavLink>
+                <NavLink to="/AddItem" name="About" className="nav__link">Add Item</NavLink>
               </li>
               <li className="nav__item">
-                <NavLink to="/SignUp" name="Skills" className="nav__link" >Skills</NavLink>
+                <NavLink to="/SearchItems" name="Skills" className="nav__link" >Search Items</NavLink>
               </li>
             </ul>
           </div>

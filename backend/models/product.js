@@ -23,9 +23,10 @@ const productSchema = new mongoose.Schema(
     picture: {
       type: Buffer,
     },
-    founder: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
+      ref: "users",
     },
   },
   {

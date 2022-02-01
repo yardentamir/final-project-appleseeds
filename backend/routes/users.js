@@ -3,25 +3,23 @@ const rootRouter = express.Router();
 const imgUpload = require("../middleware/img-upload");
 const auth = require("../middleware/auth");
 const {
-  loadUsers,
-  loadUserById,
   addUser,
   uploadAvatar,
   loadAvatar,
-  userLogin,
-  userLogOut,
-  userLogOutAll,
+  login,
+  logOut,
+  logOutAll,
+  updateUser,
 } = require("../controllers/users");
-
-rootRouter.get("/loadUsers", loadUsers);
-
-rootRouter.get("/loadUserById/:id", loadUserById);
 
 rootRouter.post("/addUser", addUser);
 
 rootRouter.get("/me", auth, async (req, res) => {
+  console.log(req.user);
   res.send(req.user);
 });
+
+rootRouter.put("/updateUser", updateUser);
 
 rootRouter.post(
   "/me/uploadAvatar",
@@ -32,10 +30,10 @@ rootRouter.post(
 
 rootRouter.get("/me/avatar", auth, loadAvatar);
 
-rootRouter.post("/login", userLogin);
+rootRouter.post("/login", login);
 
-rootRouter.post("/logout", auth, userLogOut);
+rootRouter.post("/logout", auth, logOut);
 
-rootRouter.post("/logoutAll", auth, userLogOutAll);
+rootRouter.post("/logoutAll", auth, logOutAll);
 
 module.exports = rootRouter;
