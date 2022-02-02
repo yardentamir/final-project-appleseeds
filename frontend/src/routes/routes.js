@@ -1,11 +1,12 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+// import { ProductProvider } from "../providers/product.provider";
 
 import Home from "../pages/Home";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import UpdateUser from "../pages/UpdateUser";
-import AddItem from "../pages/AddItem";
+import AddItem from "../pages/AddItem/AddItem";
 import SearchItems from "../pages/SearchItems";
 
 function AppRoutes() {

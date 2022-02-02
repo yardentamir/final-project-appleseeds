@@ -1,7 +1,7 @@
 
 import { Link, NavLink } from 'react-router-dom';
 import React, { useContext, useState, useEffect } from 'react';
-import { UserContext } from '../providers/user';
+import { UserContext } from '../providers/user.provider';
 import myApi from "../api/Api";
 import "./styles/Header.css";
 

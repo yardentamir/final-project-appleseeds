@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import myApi from "../api/Api";
-import { UserContext } from '../providers/user';
+import { UserContext } from '../providers/user.provider';
 import SignUpBanner from "../components/Banner";
 import FromGroup from "../components/FormGroup";
 import "./styles/Sign.css";

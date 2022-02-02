@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import myApi from "../api/Api";
 import SignUpBanner from "../components/Banner";
 import FromGroup from "../components/FormGroup";
-import { UserContext } from '../providers/user';
+import { UserContext } from '../providers/user.provider';
+import { INPUT_ATTRIBUTES } from '../constants/signUp.constants';
 import "./styles/Sign.css";
 
 
@@ -78,12 +79,9 @@ function SignUp() {
     setNewUserBody({ ...newUserBody, [name]: value });
   }
 
-  const renderInputs = () => {
-    const keys = [{ name: "name", type: "text" }, { name: "email", type: "email" }, { name: "password", type: "password" }];
-    return keys.map(item => {
-      return <FromGroup key={item.name} text={item.name} name={item.name} type={item.type} callback={handleInputChange}>{currentUserBody}</FromGroup>
-    })
-  }
+  const renderInputs = () => INPUT_ATTRIBUTES.map(inputAttr => {
+    return <FromGroup key={inputAttr.id} {...inputAttr} value={currentUserBody[inputAttr.id]} onChange={handleInputChange} />
+  })
 
   return (
     <div className="wrapper">

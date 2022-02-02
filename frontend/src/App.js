@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import Header from "./components/Header";
-import { UserProvider } from "./providers/user";
+import { UserProvider } from "./providers/user.provider";
 import Routes from "./routes/routes";
 
 function App() {

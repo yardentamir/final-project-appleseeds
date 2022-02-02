@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import LogInBanner from "../components/Banner";
-import { UserContext } from '../providers/user';
+import { UserContext } from '../providers/user.provider';
 import myApi from "../api/Api";
 import "./styles/Sign.css";
 

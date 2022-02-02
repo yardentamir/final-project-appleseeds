@@ -115,7 +115,8 @@ label {
   color: var(--color-dark-gray);
 }
 
-input {
+input,
+textarea {
   background-color: var(--color-light-gray);
   padding: 0.5rem;
   border: 1px solid transparent;
