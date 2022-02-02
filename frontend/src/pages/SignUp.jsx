@@ -14,7 +14,6 @@ function SignUp() {
   const [newUser, setNewUser] = useState({});
   const [avatar, setAvatar] = useState("");
   const [image, setImage] = useState("");
-
   const imageUploadRef = useRef(null);
 
   const AddUser = async (e) => {
@@ -90,7 +89,6 @@ function SignUp() {
       <div className="left">
         <div className="sign-up-form">
           <h1>Sign up to Find Me</h1>
-
           <form onSubmit={onSubmit}>
             {renderInputs()}
             <input type="file" ref={imageUploadRef} id="mediaFile" accept="image/png, image/jpeg" onChange={fileUpload} />

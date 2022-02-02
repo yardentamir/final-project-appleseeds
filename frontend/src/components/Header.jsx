@@ -11,7 +11,6 @@ function Header() {
   const [avatar, setAvatar] = useState('');
 
   useEffect(() => {
-    console.log("in header token: " + token);
     const loadAvatar = async () => {
       try {
         const { data } = await myApi.get("/users/me/avatar", {
@@ -22,13 +21,11 @@ function Header() {
         }
         );
         setAvatar(data);
-        console.log("the data: " + data);
       } catch (err) {
-        console.log("error")
         console.log(err)
       }
     }
-    loadAvatar();
+    token && loadAvatar();
   }, [token])
 
   return (

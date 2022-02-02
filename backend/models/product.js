@@ -20,6 +20,14 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: [true, "Please Enter Location"],
     },
+    phone: {
+      type: String,
+      validate(value) {
+        if (!validator.isMobilePhone(value, ["he-IL"])) {
+          throw new Error("Invalid Phone Number");
+        }
+      },
+    },
     picture: {
       type: Buffer,
     },

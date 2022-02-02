@@ -1,0 +1,28 @@
+.action-button {
+  background: var(--first-color);
+  color: white;
+  cursor: pointer;
+  font-family: inherit;
+  margin: 10px 5px;
+}
+
+.action-button:hover {
+  background: var(--white-color);
+  color: var(--dark-color-alt);
+}
+
+select,
+option {
+  width: 100%;
+  padding: 10px;
+}
+
+.add-item-main {
+  margin-top: 50px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.add-item-main > * {
+  margin: 7% 0;
+}
