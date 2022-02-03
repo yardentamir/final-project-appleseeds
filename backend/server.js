@@ -4,10 +4,9 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 const userRouter = require("./routes/users");
-
 const app = express();
 
-const publicPath = path.join(__dirname, "./frontend/build");
+const publicPath = path.join(__dirname, "../frontend/build");
 const PORT = process.env.PORT || 8080;
 
 app.use(cors());
