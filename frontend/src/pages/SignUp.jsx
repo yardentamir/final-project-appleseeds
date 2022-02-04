@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import myApi from "../api/Api";
 import { UserContext } from '../providers/user.provider';
 import SignUpBanner from "../components/Banner";
@@ -10,13 +10,14 @@ import { INPUT_ATTRIBUTES } from '../constants/signUp.constants';
 
 function SignUp() {
 
+  const navigate = useNavigate();
   const { setToken, token } = useContext(UserContext);
   const [newUser, setNewUser] = useState({});
   const [avatar, setAvatar] = useState("");
   const [image, setImage] = useState("");
   const imageUploadRef = useRef(null);
 
-  const AddUser = async (e) => {
+  const addUser = async (e) => {
     e.preventDefault();
     try {
       setToken('');
@@ -63,13 +64,11 @@ function SignUp() {
     return <FromGroup key={inputAttr.id} {...inputAttr} onChange={handleInputChange} />
   })
 
-
-
   const onSubmit = async (event) => {
     try {
       event.preventDefault();
-      await AddUser(event)
-
+      await addUser(event)
+      navigate("/SignIn");
 
     } catch (err) {
       console.log(err);
@@ -91,7 +90,7 @@ function SignUp() {
           <h1>Sign up to Find Me</h1>
           <form onSubmit={onSubmit}>
             {renderInputs()}
-            <input type="file" ref={imageUploadRef} id="mediaFile" accept="image/png, image/jpeg" onChange={fileUpload} />
+            <input type="file" ref={imageUploadRef} className="hidden-upload-file" accept="image/png, image/jpeg" onChange={fileUpload} />
             <div id="profile" onClick={() => imageUploadRef.current.click()} style={{ backgroundImage: "url(" + image + ")" }}>
               <div className="dashes"></div>
               <label className={image && "hasImage"}>Click to browse an avatar image</label>

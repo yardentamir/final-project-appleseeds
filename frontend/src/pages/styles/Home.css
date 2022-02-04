@@ -1,0 +1,46 @@
+.header-of-home-page {
+  text-align: center;
+  background: #e6e7e9;
+  padding: 1% 0 6% 0;
+}
+
+.slanted-div {
+  position: relative;
+  /* padding: 300px 0; */
+  /* background: #3664f4; */
+  /* height: 68vh; */
+  background: radial-gradient(
+    circle at 100% 0%,
+    rgba(54, 100, 244, 1) 0%,
+    rgba(24, 37, 80, 1) 100%
+  );
+  overflow: visible;
+  z-index: 1;
+}
+
+.slanted-div:before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: inherit;
+  z-index: -1;
+  top: 0;
+  transform-origin: left top;
+  transform: skewY(-3deg);
+}
+
+.slanted-div * {
+  color: white;
+}
+
+.keys-img {
+  margin: 0 auto;
+  max-width: 40%;
+}
+
+/* .slanted-div:after {
+  bottom: 0;
+  transform-origin: left bottom;
+  transform: skewY(3deg);
+} */

@@ -64,6 +64,10 @@ const logOut = async (req, res) => {
     });
     await req.user.save();
 
+    res.clearCookie("jwt");
+
+    // res.status(200).redirect("/");
+
     res.send("log out successfully!");
   } catch (error) {
     res.status(500).send(error.response.data);
@@ -74,22 +78,43 @@ const logOutAll = async (req, res) => {
   try {
     req.user.tokens = [];
     await req.user.save();
+
+    res.clearCookie("jwt");
+
     res.send();
   } catch (error) {
     res.status(500).send(error.response.data);
   }
 };
 
-const updateUser = async (req, res) => {
-  try {
-    const userBody = req.body;
-    // const updatedUser = await User.findByIdAndUpdate(req.user._id, userBody);
-    req.user = userBody;
+// const updateUser = async (req, res) => {
+//   try {
+//     const userBody = req.body;
+//     const updatedUser = await User.findByIdAndUpdate(req.user._id, userBody);
+//     // req.user = userBody;
+//     // console.log(req.user);
 
-    await req.user.save();
-    res.send(req.user);
+//     // await updatedUser.save();
+//     res.send(updatedUser);
+//   } catch (error) {
+//     res.status(500).send(error.response.data);
+//   }
+// };
+
+const updateUser = async (req, res) => {
+  const { name, password, email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      user.password = password;
+      user.name = name;
+      await user.save();
+      res.status(200).send(user);
+    } else {
+      throw new Error("User Not Found");
+    }
   } catch (error) {
-    res.status(500).send(error.response.data);
+    res.status(400).send(error.message);
   }
 };
 

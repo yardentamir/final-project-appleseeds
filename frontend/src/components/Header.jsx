@@ -44,7 +44,7 @@ function Header() {
               <>
                 <div className="nav__perfil">
                   <div className="nav__img">
-                    <img src={avatar && `data:image/png;base64,${avatar}`} alt="avatar" />
+                    {(avatar && token) && <img src={`data:image/png;base64,${avatar}`} alt="avatar" />}
                   </div>
 
                   <div>

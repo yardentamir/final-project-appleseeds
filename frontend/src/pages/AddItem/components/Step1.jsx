@@ -3,29 +3,29 @@ import { FlexNoWrap } from "../../../components/styles/Flex.styled";
 import "../styles/FormSteps.css";
 import { ButtonToggle } from "../../../components/ToggleButton";
 import Select from "../../../components/Select";
-import { ProductContext } from "../providers/product.provider";
+import { ProductContext } from "../../../providers/product.provider";
 import { ITEM_TYPES, ITEM_TITLES } from "../../../constants/addItem.constants";
 
 
 function Step1() {
-  const [active, setActive] = useState(ITEM_TITLES[0]);
+  const [title, setTitle] = useState(ITEM_TITLES[0]);
   const [type, setType] = useState('keys');
   const [description, setDescription] = useState('');
   const { setProduct, product } = useContext(ProductContext);
 
-
   useEffect(() => {
-    setProduct({ ...product, type, description, active });
+    setProduct({ ...product, type, description, title });
+    console.log(product);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, description, active])
+  }, [type, description, title])
 
 
   return (
     <div className="add-item-main">
       <FlexNoWrap>
-        {ITEM_TITLES.map((title) => (
-          <ButtonToggle key={title} active={active === title} onClick={() => setActive(title)}>
-            {title}
+        {ITEM_TITLES.map((itemTitle) => (
+          <ButtonToggle key={itemTitle} active={title === itemTitle} onClick={() => setTitle(itemTitle)}>
+            {itemTitle}
           </ButtonToggle>
         ))}
       </FlexNoWrap>

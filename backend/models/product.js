@@ -2,23 +2,22 @@ const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
   {
-    name: {
+    title: {
       type: String,
-      required: [true, "Please Enter Product Name"],
-      trim: true,
-    },
-    description: {
-      type: String,
-      required: [true, "Please Enter Product Description"],
+      required: [true, "Please choose Title"],
     },
     type: {
       type: String,
       required: [true, "Please Enter Product Type"],
       trim: true,
     },
-    location: {
+    description: {
       type: String,
-      required: [true, "Please Enter Location"],
+      required: [true, "Please Enter Product Description"],
+    },
+    city: {
+      type: String,
+      required: [true, "Please Enter City"],
     },
     phone: {
       type: String,
@@ -33,7 +32,6 @@ const productSchema = new mongoose.Schema(
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: "users",
     },
   },

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import "../styles/FormSteps.css";
 import Select from "../../../components/Select";
 import axios from "axios";
-import { ProductContext } from "../providers/product.provider";
+import { ProductContext } from "../../../providers/product.provider";
 
 
 function Step2() {

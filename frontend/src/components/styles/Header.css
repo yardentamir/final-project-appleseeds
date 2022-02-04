@@ -143,6 +143,8 @@ a {
 .nav__name {
   display: block;
   color: var(--white-color);
+
+  text-align: left;
 }
 
 .nav__profesion {
@@ -202,6 +204,7 @@ a {
     display: -ms-flexbox;
     display: flex;
     align-items: center;
+    text-align: left;
   }
   .nav__img {
     width: 32px;

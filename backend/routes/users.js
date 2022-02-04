@@ -15,11 +15,10 @@ const {
 rootRouter.post("/addUser", addUser);
 
 rootRouter.get("/me", auth, async (req, res) => {
-  console.log(req.user);
   res.send(req.user);
 });
 
-rootRouter.put("/updateUser", updateUser);
+rootRouter.put("/me/updateUser", auth, updateUser);
 
 rootRouter.post(
   "/me/uploadAvatar",
