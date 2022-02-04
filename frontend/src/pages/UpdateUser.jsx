@@ -4,9 +4,10 @@ import myApi from "../api/Api";
 import SignUpBanner from "../components/Banner";
 import FromGroup from "../components/FormGroup";
 import { UserContext } from '../providers/user.provider';
-import { INPUT_ATTRIBUTES } from '../constants/signUp.constants';
 import "./styles/Sign.css";
 
+import { INPUT_ATTRIBUTES } from '../constants/signs.constants';
+import { headersToken } from "../utils/functions.utils";
 
 function UpdateUser() {
 
@@ -21,12 +22,7 @@ function UpdateUser() {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const { data } = await myApi.get("/users/me", {
-          headers: {
-            'Content-Type': "application/json",
-            'Authorization': `Bearer ${token}`
-          }
-        });
+        const { data } = await myApi.get("/users/me", headersToken(token));
         setCurrentUserBody(data);
         const { name, email } = data;
         setNewUserBody({ name, email });
@@ -41,12 +37,7 @@ function UpdateUser() {
     try {
       const data = new FormData();
       data.append("avatar", avatar);
-      await myApi.post("/users/me/uploadAvatar", data, {
-        headers: {
-          'Content-Type': "application/json",
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      await myApi.post("/users/me/uploadAvatar", data, headersToken(token));
     } catch (error) {
       console.log(error);
     }
@@ -65,12 +56,7 @@ function UpdateUser() {
     e.preventDefault();
     console.log(newUserBody)
     try {
-      await myApi.put("/users/me/updateUser", newUserBody, {
-        headers: {
-          'Content-Type': "application/json",
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      await myApi.put("/users/me/updateUser", newUserBody, headersToken(token));
       console.log("data")
     } catch (error) {
       console.log(error.message);
@@ -100,12 +86,7 @@ function UpdateUser() {
 
   const logout = async () => {
     try {
-      await myApi.post('/users/logout', { data: {} }, {
-        headers: {
-          'Content-Type': "application/json",
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      await myApi.post('/users/logout', { data: {} }, headersToken(token));
       setUser('');
       setToken('');
       navigate("/SignIn");
@@ -116,12 +97,7 @@ function UpdateUser() {
 
   const logoutAll = async () => {
     try {
-      await myApi.post('/users/logoutAll', { data: {} }, {
-        headers: {
-          'Content-Type': "application/json",
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      await myApi.post('/users/logoutAll', { data: {} }, headersToken(token));
       setUser('');
       setToken('');
       navigate("/SignIn");

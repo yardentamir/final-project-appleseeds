@@ -2,6 +2,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import React, { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../providers/user.provider';
+import { headersToken } from "../utils/functions.utils";
 import myApi from "../api/Api";
 import "./styles/Header.css";
 
@@ -13,13 +14,7 @@ function Header() {
   useEffect(() => {
     const loadAvatar = async () => {
       try {
-        const { data } = await myApi.get("/users/me/avatar", {
-          headers: {
-            'Content-Type': "application/json",
-            'Authorization': `Bearer ${token}`
-          }
-        }
-        );
+        const { data } = await myApi.get("/users/me/avatar", headersToken(token));
         setAvatar(data);
       } catch (err) {
         console.log(err)
@@ -36,34 +31,26 @@ function Header() {
 
       <nav className={`nav ${isOpen ? "show" : ""}`} id="nav-menu">
         <div className="nav__content bd-grid">
-
           <ion-icon name="close-outline" onClick={() => setIsOpen(false)} class="nav__close" id="nav-close"></ion-icon>
 
           {
             user ?
-              <>
-                <div className="nav__perfil">
-                  <div className="nav__img">
-                    {(avatar && token) && <img src={`data:image/png;base64,${avatar}`} alt="avatar" />}
-                  </div>
-
-                  <div>
-                    <Link to="/UpdateUser">{user.name}</Link>
-                  </div>
+              <div className="nav__perfil">
+                <div className="nav__img">
+                  {(avatar && token) && <img src={`data:image/png;base64,${avatar}`} alt="avatar" />}
                 </div>
-              </>
+                <div>
+                  <Link to="/UpdateUser">{user.name}</Link>
+                </div>
+              </div>
               :
-              <>
-                <div className="nav__perfil">
-                  <div className="nav__img">
-                  </div>
-
-                  <div>
-                    <Link to="/SignIn" className="nav__name">Sign In</Link>
-                  </div>
+              <div className="nav__perfil">
+                <div className="nav__img">
                 </div>
-              </>
-
+                <div>
+                  <Link to="/SignIn" className="nav__name">Sign In</Link>
+                </div>
+              </div>
           }
 
           <div className="nav__menu">
@@ -79,7 +66,6 @@ function Header() {
               </li>
             </ul>
           </div>
-
         </div>
       </nav>
     </header>

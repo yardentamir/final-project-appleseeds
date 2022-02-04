@@ -67,7 +67,6 @@ const logOut = async (req, res) => {
     res.clearCookie("jwt");
 
     // res.status(200).redirect("/");
-
     res.send("log out successfully!");
   } catch (error) {
     res.status(500).send(error.response.data);

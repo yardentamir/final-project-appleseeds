@@ -8,7 +8,6 @@ import SignUp from "../pages/SignUp";
 import UpdateUser from "../pages/UpdateUser";
 import AddItem from "../pages/AddItem/AddItem";
 import SearchItems from "../pages/SearchItems";
-// import { ProductProvider } from "../pages/AddItem/providers/product.provider";
 
 function AppRoutes() {
   return (

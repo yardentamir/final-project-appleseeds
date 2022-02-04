@@ -3,9 +3,10 @@ const Product = require("../models/product");
 
 const addProduct = async (req, res) => {
   try {
-    const productBody = req.body;
-
-    const product = new Product(productBody);
+    const product = new Product({
+      ...req.body,
+      user: req.user || "",
+    });
     await product.save();
     res.status(201).send(product);
   } catch (error) {

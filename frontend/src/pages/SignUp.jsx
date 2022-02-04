@@ -5,7 +5,9 @@ import { UserContext } from '../providers/user.provider';
 import SignUpBanner from "../components/Banner";
 import FromGroup from "../components/FormGroup";
 import "./styles/Sign.css";
-import { INPUT_ATTRIBUTES } from '../constants/signUp.constants';
+
+import { INPUT_ATTRIBUTES } from '../constants/signs.constants';
+import { headersToken } from "../utils/functions.utils";
 
 
 function SignUp() {
@@ -37,12 +39,7 @@ function SignUp() {
     try {
       const data = new FormData();
       data.append("avatar", avatar);
-      await myApi.post("/users/me/uploadAvatar", data, {
-        headers: {
-          'Content-Type': "application/json",
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      await myApi.post("/users/me/uploadAvatar", data, headersToken(token));
     } catch (error) {
       console.log(error);
     }
@@ -52,7 +49,7 @@ function SignUp() {
   const fileUpload = (e) => {
     e.preventDefault();
     const fileReader = new FileReader();
-    const file = e.target.files[0]; // e.target.files -> returns Array of Objects.
+    const file = e.target.files[0];
     fileReader.readAsDataURL(file);
     setAvatar(file)
     fileReader.onload = ({ target: { result } }) => {
@@ -69,7 +66,6 @@ function SignUp() {
       event.preventDefault();
       await addUser(event)
       navigate("/SignIn");
-
     } catch (err) {
       console.log(err);
     }

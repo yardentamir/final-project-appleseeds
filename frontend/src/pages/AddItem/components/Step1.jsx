@@ -15,9 +15,13 @@ function Step1() {
 
   useEffect(() => {
     setProduct({ ...product, type, description, title });
-    console.log(product);
+    // console.log(product);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type, description, title])
+  }, [type, description, title]);
+
+  useEffect(() => {
+    console.log("step 1 mounted");
+  }, [])
 
 
   return (
