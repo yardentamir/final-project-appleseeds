@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, forwardRef, useImperativeHandle } from 'react';
 import { FlexNoWrap } from "../../../components/styles/Flex.styled";
 import "../styles/FormSteps.css";
 import { ButtonToggle } from "../../../components/ToggleButton";
@@ -6,12 +6,24 @@ import Select from "../../../components/Select";
 import { ProductContext } from "../../../providers/product.provider";
 import { ITEM_TYPES, ITEM_TITLES } from "../../../constants/addItem.constants";
 
-
-function Step1() {
+const Step1 = forwardRef(({ jumpToStep }, ref) => {
   const [title, setTitle] = useState(ITEM_TITLES[0]);
   const [type, setType] = useState('keys');
   const [description, setDescription] = useState('');
   const { setProduct, product } = useContext(ProductContext);
+
+  useImperativeHandle(ref, () => ({
+    isValidated() {
+      console.log("[isValidated]", product, description);
+
+      if (!product.description) {
+        return false;
+      } else {
+        // all good, let's proceed
+        return true;
+      }
+    }
+  }));
 
   useEffect(() => {
     setProduct({ ...product, type, description, title });
@@ -25,7 +37,7 @@ function Step1() {
 
 
   return (
-    <div className="add-item-main">
+    <div className="center">
       <FlexNoWrap>
         {ITEM_TITLES.map((itemTitle) => (
           <ButtonToggle key={itemTitle} active={title === itemTitle} onClick={() => setTitle(itemTitle)}>
@@ -43,6 +55,6 @@ function Step1() {
       </div>
     </div>
   );
-}
+});
 
 export default Step1;

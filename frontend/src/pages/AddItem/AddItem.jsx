@@ -9,8 +9,7 @@ import Step1 from "./components/Step1";
 import Step2 from "./components/Step2";
 import Step3 from "./components/Step3";
 
-import StepProgressBar from 'react-step-progress';
-import 'react-step-progress/dist/index.css';
+import StepZilla from "react-stepzilla";
 import "./styles/FormSteps.css";
 
 function AddItem() {
@@ -22,14 +21,6 @@ function AddItem() {
     console.log(product);
   }, [product])
 
-  const step1Validator = () => {
-    console.log(product);
-    return Object.keys(product).length > 0;
-  }
-
-  function step2Validator() {
-    return true;
-  }
 
   async function onFormSubmit() {
     console.log("submit", product, pictureContext);
@@ -68,34 +59,19 @@ function AddItem() {
     token && avatar();
   }, [addPicture, token])
 
-  const steps = [
-    {
-      label: 'Description',
-      name: 'step 1',
-      content: <Step1 />,
-      validator: step1Validator
-    },
-    {
-      label: 'Location',
-      name: 'step 2',
-      content: <Step2 />,
-      validator: step2Validator
-    },
-    {
-      label: 'Image',
-      name: 'step 3',
-      content: <Step3 />,
-    }
-  ]
+  const steps =
+    [
+      { name: 'Description', component: <Step1 /> },
+      { name: 'Location', component: <Step2 /> },
+      { name: 'Image', component: <Step3 /> },
+    ];
 
   // render the progress bar
   return (
     <Container>
-      <StepProgressBar
-        startingStep={0}
-        onSubmit={onFormSubmit}
-        steps={steps}
-      />
+      <div className='step-progress add-item-main'>
+        <StepZilla steps={steps} preventEnterSubmission={true} />
+      </div>
     </Container>
   );
 }

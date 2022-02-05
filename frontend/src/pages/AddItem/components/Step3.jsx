@@ -29,7 +29,7 @@ function Step3() {
   };
 
   return (
-    <div className="add-item-main">
+    <div className="center">
       <input type="file" ref={imageUploadRef} className="hidden-upload-file" accept="image/png, image/jpeg" onChange={fileUpload} />
       <div id="profile" onClick={() => imageUploadRef.current.click()} style={{ backgroundImage: "url(" + image + ")" }}>
         <div className="dashes"></div>

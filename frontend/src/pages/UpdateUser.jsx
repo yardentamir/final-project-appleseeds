@@ -119,7 +119,7 @@ function UpdateUser() {
     <div className="wrapper">
       <div className="left">
         <div className="sign-up-form">
-          <h1>Update Your Account</h1>
+          <h2>Update Your Account</h2>
 
           <form onSubmit={onSubmit}>
             {renderInputs()}

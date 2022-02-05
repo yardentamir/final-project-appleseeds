@@ -113,6 +113,7 @@ svg {
 label {
   display: block;
   color: var(--color-dark-gray);
+  font-size: 21px;
 }
 
 input,
@@ -123,7 +124,7 @@ textarea {
   width: 100%;
   border-radius: 6px;
   font-size: 1rem;
-  font-family: sans-serif;
+  font-family: inherit;
 }
 
 input:focus {
@@ -152,8 +153,8 @@ button {
   padding: 0.75rem;
   width: 100%;
   border-radius: 6px;
-  font-weight: 700;
-  font-size: 0.75rem;
+  font-family: inherit;
+  font-size: inherit;
   cursor: pointer;
   transition: all 0.3s ease-out;
 }

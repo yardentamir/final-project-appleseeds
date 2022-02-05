@@ -27,7 +27,7 @@ function Step2() {
   }, [city, phone])
 
   return (
-    <div className="add-item-main">
+    <div className="center">
       <div>
         <label htmlFor="type">Choose location:</label>
         {cities && <Select array={cities} type="cities" onChange={({ target }) => setCity(target.value)} />}

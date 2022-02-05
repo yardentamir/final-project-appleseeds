@@ -32,7 +32,7 @@ function SignIn() {
     <div className="wrapper">
       <div className="left">
         <div className="sign-in-form">
-          <h1>Sign in to Find Me</h1>
+          <h2>Sign in to Find Me</h2>
 
           <form onSubmit={login}>
             <div className="form-group">

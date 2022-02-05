@@ -7,15 +7,6 @@ import "./styles/Home.css";
 
 function Home() {
 
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    // console.log(product)
-
-    console.log("newObj in useeffect ", count)
-  }, [count]);
-
-
   return (
     <div className="full-page">
       <header className="header-of-home-page">
@@ -37,7 +28,6 @@ function Home() {
               <img src={keysImage} alt="keys" className="keys-img" />
               <input type="button" value="add item here" />
             </div>
-            <button onClick={() => setCount(count + 1)} />
           </FlexAround>
         </Container>
       </section>

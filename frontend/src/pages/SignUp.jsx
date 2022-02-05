@@ -83,7 +83,7 @@ function SignUp() {
     <div className="wrapper">
       <div className="left">
         <div className="sign-up-form">
-          <h1>Sign up to Find Me</h1>
+          <h2>Sign up to Find Me</h2>
           <form onSubmit={onSubmit}>
             {renderInputs()}
             <input type="file" ref={imageUploadRef} className="hidden-upload-file" accept="image/png, image/jpeg" onChange={fileUpload} />
