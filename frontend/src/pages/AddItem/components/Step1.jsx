@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, forwardRef, useImperativeHandle } from 'react';
+import { useState, useEffect, useContext, forwardRef, useImperativeHandle, useRef } from 'react';
 import { FlexNoWrap } from "../../../components/styles/Flex.styled";
 import "../styles/FormSteps.css";
 import { ButtonToggle } from "../../../components/ToggleButton";
@@ -11,15 +11,14 @@ const Step1 = forwardRef(({ jumpToStep }, ref) => {
   const [type, setType] = useState('keys');
   const [description, setDescription] = useState('');
   const { setProduct, product } = useContext(ProductContext);
+  const inputRef = useRef();
 
   useImperativeHandle(ref, () => ({
     isValidated() {
-      console.log("[isValidated]", product, description);
-
       if (!product.description) {
+        inputRef.current.classList = "error-style";
         return false;
       } else {
-        // all good, let's proceed
         return true;
       }
     }
@@ -27,13 +26,9 @@ const Step1 = forwardRef(({ jumpToStep }, ref) => {
 
   useEffect(() => {
     setProduct({ ...product, type, description, title });
-    // console.log(product);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type, description, title]);
 
-  useEffect(() => {
-    console.log("step 1 mounted");
-  }, [])
 
 
   return (
@@ -51,7 +46,7 @@ const Step1 = forwardRef(({ jumpToStep }, ref) => {
       </div>
       <div>
         <label htmlFor="type">Write a description:</label>
-        <textarea type="text" name="description" placeholder="description" onChange={({ target }) => setDescription(target.value)} />
+        <textarea type="text" name="description" placeholder="description" ref={inputRef} onChange={({ target }) => { setDescription(target.value); inputRef.current.classList = ""; }} />
       </div>
     </div>
   );

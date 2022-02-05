@@ -11,7 +11,7 @@ const {
 
 rootRouter.get("/loadProducts", loadProducts);
 
-rootRouter.post("/addProduct", addProduct);
+rootRouter.post("/addProduct", auth, addProduct);
 
 rootRouter.post(
   "/me/uploadProductImg",
@@ -19,5 +19,7 @@ rootRouter.post(
   imgUpload.single("product"),
   uploadProductImg
 );
+
+rootRouter.get("/loadProductsByUserId");
 
 module.exports = rootRouter;

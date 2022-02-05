@@ -1,16 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, forwardRef, useImperativeHandle, useRef } from 'react';
 import "../styles/FormSteps.css";
 import Select from "../../../components/Select";
 import axios from "axios";
 import { ProductContext } from "../../../providers/product.provider";
 
 
-function Step2() {
+const Step2 = forwardRef(({ jumpToStep }, ref) => {
 
   const [cities, setCities] = useState("");
   const [city, setCity] = useState("אבו גוש");
   const [phone, setPhone] = useState("");
   const { setProduct, product } = useContext(ProductContext);
+  const inputRef = useRef();
 
   useEffect(() => {
     const getCities = async () => {
@@ -19,7 +20,18 @@ function Step2() {
       setCities(arrayOfCities);
     }
     getCities();
-  }, [])
+  }, []);
+
+  useImperativeHandle(ref, () => ({
+    isValidated() {
+      if (isNaN(product.phone) || product.phone.length < 8) {
+        inputRef.current.classList = "error-style";
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }));
 
   useEffect(() => {
     setProduct({ ...product, city, phone });
@@ -34,10 +46,11 @@ function Step2() {
       </div>
       <div>
         <label htmlFor="type">Write your phone number:</label>
-        <input type="tel" name="phone" placeholder="phone number" pattern="[0-9]" required onChange={({ target }) => setPhone(target.value)} />
+        <input type="tel" name="phone" ref={inputRef} placeholder="phone number" pattern="[0-9]" required onChange={({ target }) => { setPhone(target.value); inputRef.current.classList = ""; }} />
       </div>
     </div>
   );
-}
+
+});
 
 export default Step2;

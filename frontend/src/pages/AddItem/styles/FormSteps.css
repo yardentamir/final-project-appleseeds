@@ -174,3 +174,7 @@ ol.progtrckr li.progtrckr-done:hover:after {
     gap: 15px;
   }
 }
+
+.error-style {
+  border: red solid 1px;
+}

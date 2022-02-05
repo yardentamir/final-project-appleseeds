@@ -14,10 +14,11 @@ function UpdateUser() {
   const navigate = useNavigate();
   const [currentUserBody, setCurrentUserBody] = useState({});
   const [newUserBody, setNewUserBody] = useState({});
-  const { token, setUser, setToken } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const [avatar, setAvatar] = useState("");
   const [image, setImage] = useState("");
   const imageUploadRef = useRef(null);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const getUser = async () => {
@@ -88,7 +89,8 @@ function UpdateUser() {
     try {
       await myApi.post('/users/logout', { data: {} }, headersToken(token));
       setUser('');
-      setToken('');
+      // setToken('');
+      localStorage.setItem('token', '');
       navigate("/SignIn");
     } catch (err) {
       console.log(err);
@@ -99,7 +101,7 @@ function UpdateUser() {
     try {
       await myApi.post('/users/logoutAll', { data: {} }, headersToken(token));
       setUser('');
-      setToken('');
+      localStorage.setItem('token', '');
       navigate("/SignIn");
     } catch (err) {
       console.log(err);

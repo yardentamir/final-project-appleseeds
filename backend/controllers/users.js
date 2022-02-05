@@ -66,7 +66,6 @@ const logOut = async (req, res) => {
 
     res.clearCookie("jwt");
 
-    // res.status(200).redirect("/");
     res.send("log out successfully!");
   } catch (error) {
     res.status(500).send(error.response.data);
@@ -85,20 +84,6 @@ const logOutAll = async (req, res) => {
     res.status(500).send(error.response.data);
   }
 };
-
-// const updateUser = async (req, res) => {
-//   try {
-//     const userBody = req.body;
-//     const updatedUser = await User.findByIdAndUpdate(req.user._id, userBody);
-//     // req.user = userBody;
-//     // console.log(req.user);
-
-//     // await updatedUser.save();
-//     res.send(updatedUser);
-//   } catch (error) {
-//     res.status(500).send(error.response.data);
-//   }
-// };
 
 const updateUser = async (req, res) => {
   const { name, password, email } = req.body;

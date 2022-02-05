@@ -9,7 +9,7 @@ function SignIn() {
 
   const navigate = useNavigate();
   const [loginDetails, setLoginDetails] = useState({});
-  const { setUser, setToken } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const handleInputChange = ({ target: { name, value } }) => {
     setLoginDetails({ ...loginDetails, [name]: value });
@@ -18,11 +18,10 @@ function SignIn() {
   const login = async (e) => {
     e.preventDefault();
     try {
-      console.log(loginDetails)
       const { data: { user, token } } = await myApi.post('/users/login', loginDetails);
       setUser(user);
-      setToken(token);
-      navigate("/")
+      localStorage.setItem('token', token);
+      navigate("/");
     } catch (err) {
       console.log(err);
     }

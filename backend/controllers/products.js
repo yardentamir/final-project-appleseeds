@@ -1,11 +1,12 @@
 const sharp = require("sharp");
 const Product = require("../models/product");
+const User = require("../models/user");
 
 const addProduct = async (req, res) => {
   try {
     const product = new Product({
       ...req.body,
-      user: req.user || "",
+      user: req.user._id,
     });
     await product.save();
     res.status(201).send(product);
@@ -42,4 +43,18 @@ const uploadProductImg = async (req, res) => {
   }
 };
 
-module.exports = { addProduct, loadProducts, uploadProductImg };
+const loadProductsByUserId = async (req, res) => {
+  try {
+    await req.user.populate("products");
+    req.user.products;
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+module.exports = {
+  addProduct,
+  loadProducts,
+  uploadProductImg,
+  loadProductsByUserId,
+};

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useCallback, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import myApi from "../api/Api";
-import { UserContext } from '../providers/user.provider';
+// import { UserContext } from '../providers/user.provider';
 import SignUpBanner from "../components/Banner";
 import FromGroup from "../components/FormGroup";
 import "./styles/Sign.css";
@@ -13,18 +13,21 @@ import { headersToken } from "../utils/functions.utils";
 function SignUp() {
 
   const navigate = useNavigate();
-  const { setToken, token } = useContext(UserContext);
+  // const { setToken, token } = useContext(UserContext);
   const [newUser, setNewUser] = useState({});
   const [avatar, setAvatar] = useState("");
   const [image, setImage] = useState("");
   const imageUploadRef = useRef(null);
+  const token = localStorage.getItem('token');
 
   const addUser = async (e) => {
     e.preventDefault();
     try {
-      setToken('');
+      localStorage.setItem('token', "");
+      // setToken('');
       const { data: { token } } = await myApi.post("/users/addUser", newUser);
-      setToken(token);
+      // setToken(token);
+      localStorage.setItem('token', token);
     } catch (error) {
       console.log(error.response.data);
     }

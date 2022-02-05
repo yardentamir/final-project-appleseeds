@@ -14,16 +14,20 @@ import "./styles/FormSteps.css";
 
 function AddItem() {
 
-  const { product, pictureContext } = useContext(ProductContext);
-  const { token } = useContext(UserContext);
+  const { product, pictureContext, isSubmitted, setIsSubmitted } = useContext(ProductContext);
+  // const { token } = useContext(UserContext);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    console.log(product);
-  }, [product])
+    console.log(isSubmitted);
+    isSubmitted && onFormSubmit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSubmitted])
 
 
   async function onFormSubmit() {
     console.log("submit", product, pictureContext);
+    setIsSubmitted(false);
     try {
       await addProduct();
     } catch (err) {
@@ -34,7 +38,7 @@ function AddItem() {
   const addProduct = async () => {
     try {
       if (token) product.user = token;
-      const { data } = await myApi.post("/products/addProduct", product);
+      const { data } = await myApi.post("/products/addProduct", product, headersToken(token));
       console.log(data)
     } catch (error) {
       console.log(error.response.data);
@@ -45,11 +49,10 @@ function AddItem() {
     try {
       const data = new FormData();
       data.append("product", pictureContext);
-      await myApi.post("/users/me/uploadAvatar", data, headersToken(token));
+      await myApi.post("/products/me/uploadProductImg", data, headersToken(token));
     } catch (error) {
       console.log(error);
     }
-
   }, [pictureContext, token])
 
   useEffect(() => {
@@ -70,7 +73,7 @@ function AddItem() {
   return (
     <Container>
       <div className='step-progress add-item-main'>
-        <StepZilla steps={steps} preventEnterSubmission={true} />
+        <StepZilla steps={steps} prevBtnOnLastStep={false} />
       </div>
     </Container>
   );
