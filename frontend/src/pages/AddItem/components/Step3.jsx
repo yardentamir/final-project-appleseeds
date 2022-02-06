@@ -21,7 +21,6 @@ const Step3 = forwardRef(({ jumpToStep }, ref) => {
     e.preventDefault();
     const fileReader = new FileReader();
     const file = e.target.files[0]; // e.target.files -> returns Array of Objects.
-    fileReader.readAsDataURL(file);
     fileReader.onload = ({ target: { result } }) => {
       setImage(result)
     }

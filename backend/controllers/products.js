@@ -27,6 +27,7 @@ const loadProducts = async (req, res) => {
 const uploadProductImg = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!req.file) throw new Error("no picture");
 
     const buffer = await sharp(req.file.buffer)
       .resize({ width: 250, height: 250 })
@@ -38,7 +39,7 @@ const uploadProductImg = async (req, res) => {
 
     await product.save();
     res.status(201).send("upload successfully");
-  } catch (err) {
+  } catch (error) {
     res.status(500).send(error.message);
   }
 };
@@ -46,7 +47,7 @@ const uploadProductImg = async (req, res) => {
 const loadProductsByUserId = async (req, res) => {
   try {
     await req.user.populate("products");
-    req.user.products;
+    res.status(201).send(req.user.products);
   } catch (error) {
     res.status(500).send(error.message);
   }

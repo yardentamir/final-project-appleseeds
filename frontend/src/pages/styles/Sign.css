@@ -127,7 +127,8 @@ textarea {
   font-family: inherit;
 }
 
-input:focus {
+input:focus,
+textarea:focus {
   color: var(--color-dark);
   background-color: var(--color-white);
   border-color: var(--color-p);

@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
-import { UserContext } from '../../providers/user.provider';
 import { Container } from '../../components/styles/Container.styled';
 import { ProductContext } from "../../providers/product.provider";
 import { headersToken } from "../../utils/functions.utils";
@@ -15,19 +14,16 @@ import "./styles/FormSteps.css";
 function AddItem() {
 
   const { product, pictureContext, isSubmitted, setIsSubmitted } = useContext(ProductContext);
-  // const { token } = useContext(UserContext);
+  const [newProductId, setNewProductId] = useState("");
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    console.log(isSubmitted);
     isSubmitted && onFormSubmit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitted])
 
 
   async function onFormSubmit() {
-    console.log("submit", product, pictureContext);
-    setIsSubmitted(false);
     try {
       await addProduct();
     } catch (err) {
@@ -39,7 +35,8 @@ function AddItem() {
     try {
       if (token) product.user = token;
       const { data } = await myApi.post("/products/addProduct", product, headersToken(token));
-      console.log(data)
+      setNewProductId(data._id)
+      setIsSubmitted(false);
     } catch (error) {
       console.log(error.response.data);
     }
@@ -49,11 +46,13 @@ function AddItem() {
     try {
       const data = new FormData();
       data.append("product", pictureContext);
-      await myApi.post("/products/me/uploadProductImg", data, headersToken(token));
+      isSubmitted && await myApi.post(`/products/me/uploadProductImg/${newProductId}`, data, headersToken(token));
+      console.log("did it!")
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data);
     }
-  }, [pictureContext, token])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pictureContext, newProductId, token])
 
   useEffect(() => {
     async function avatar() {

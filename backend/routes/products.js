@@ -14,7 +14,7 @@ rootRouter.get("/loadProducts", loadProducts);
 rootRouter.post("/addProduct", auth, addProduct);
 
 rootRouter.post(
-  "/me/uploadProductImg",
+  "/me/uploadProductImg/:id",
   auth,
   imgUpload.single("product"),
   uploadProductImg
