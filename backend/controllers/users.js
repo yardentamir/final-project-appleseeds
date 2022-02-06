@@ -14,7 +14,7 @@ const addUser = async (req, res) => {
     await user.save();
     res.status(201).send({ user, token });
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).send(error);
   }
 };
 
@@ -29,7 +29,7 @@ const uploadAvatar = async (req, res) => {
     await req.user.save();
     res.status(201).send("upload successfully");
   } catch (err) {
-    res.status(500).send(error.message);
+    res.status(500).send(err);
   }
 };
 
@@ -39,9 +39,10 @@ const loadAvatar = async (req, res) => {
     res.set("Content-Type", "image/png");
 
     const avatarToBase64 = req.user.avatar.toString("base64");
+
     res.status(201).send(avatarToBase64);
   } catch (error) {
-    res.status(404).send(error.response.data);
+    res.status(404).send(error);
   }
 };
 
@@ -53,7 +54,7 @@ const login = async (req, res) => {
     const token = await user.generateAuthToken();
     res.send({ user, token });
   } catch (error) {
-    res.status(400).send(error.response.data);
+    res.status(400).send(error);
   }
 };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container } from '../components/styles/Container.styled';
 import { FlexAround } from '../components/styles/Flex.styled';
-import keysImage from "../assets/images/pngwing.com.png";
+import keysImage from "../images/pngwing.com.png";
 import "./styles/Home.css";
 
 

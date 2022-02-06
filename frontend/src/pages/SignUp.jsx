@@ -1,9 +1,9 @@
-import React, { useState, useContext, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import myApi from "../api/Api";
-// import { UserContext } from '../providers/user.provider';
 import SignUpBanner from "../components/Banner";
 import FromGroup from "../components/FormGroup";
+import { UserContext } from '../providers/user.provider';
 import "./styles/Sign.css";
 
 import { INPUT_ATTRIBUTES } from '../constants/signs.constants';
@@ -12,44 +12,31 @@ import { headersToken } from "../utils/functions.utils";
 
 function SignUp() {
 
-  const navigate = useNavigate();
-  // const { setToken, token } = useContext(UserContext);
   const [newUser, setNewUser] = useState({});
   const [avatar, setAvatar] = useState("");
   const [image, setImage] = useState("");
-  const imageUploadRef = useRef(null);
-  const token = localStorage.getItem('token');
 
-  const addUser = async (e) => {
-    e.preventDefault();
-    try {
-      localStorage.setItem('token', "");
-      // setToken('');
-      const { data: { token } } = await myApi.post("/users/addUser", newUser);
-      // setToken(token);
-      localStorage.setItem('token', token);
-    } catch (error) {
-      console.log(error.response.data);
-    }
+  const navigate = useNavigate();
+  const imageUploadRef = useRef(null);
+  const { setUser } = useContext(UserContext);
+
+  const addUser = async () => {
+    const { data: { user, token } } = await myApi.post("/users/addUser", newUser);
+    setUser(user);
+    localStorage.setItem('token', token);
   };
 
   const handleInputChange = ({ target: { name, value } }) => {
     setNewUser({ ...newUser, [name]: value });
   }
 
+  const addAvatar = async () => {
+    const data = new FormData();
+    data.append("avatar", avatar);
+    await myApi.post("/users/me/uploadAvatar", data, headersToken(localStorage.getItem('token')));
+  }
 
-  const addAvatar = useCallback(async () => {
-    try {
-      const data = new FormData();
-      data.append("avatar", avatar);
-      await myApi.post("/users/me/uploadAvatar", data, headersToken(token));
-    } catch (error) {
-      console.log(error);
-    }
-
-  }, [avatar, token])
-
-  const fileUpload = (e) => {
+  const avatarUpload = (e) => {
     e.preventDefault();
     const fileReader = new FileReader();
     const file = e.target.files[0];
@@ -67,20 +54,15 @@ function SignUp() {
   const onSubmit = async (event) => {
     try {
       event.preventDefault();
-      await addUser(event)
-      navigate("/SignIn");
+
+      await addUser()
+      await addAvatar();
+
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
   }
-
-
-  useEffect(() => {
-    async function avatar() {
-      await addAvatar()
-    }
-    if (token && avatar) avatar();
-  }, [addAvatar, token, avatar])
 
   return (
     <div className="wrapper">
@@ -89,7 +71,7 @@ function SignUp() {
           <h2>Sign up to Find Me</h2>
           <form onSubmit={onSubmit}>
             {renderInputs()}
-            <input type="file" ref={imageUploadRef} className="hidden-upload-file" accept="image/png, image/jpeg" onChange={fileUpload} />
+            <input type="file" ref={imageUploadRef} className="hidden-upload-file" accept="image/png, image/jpeg" onChange={avatarUpload} />
             <div id="profile" onClick={() => imageUploadRef.current.click()} style={{ backgroundImage: "url(" + image + ")" }}>
               <div className="dashes"></div>
               <label className={image && "hasImage"}>Click to browse an avatar image</label>

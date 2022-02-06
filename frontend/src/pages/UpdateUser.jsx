@@ -55,10 +55,8 @@ function UpdateUser() {
 
   const updateUser = async (e) => {
     e.preventDefault();
-    console.log(newUserBody)
     try {
       await myApi.put("/users/me/updateUser", newUserBody, headersToken(token));
-      console.log("data")
     } catch (error) {
       console.log(error.message);
     }

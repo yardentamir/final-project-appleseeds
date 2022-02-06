@@ -8,32 +8,32 @@ import "./styles/Header.css";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, setUser } = useContext(UserContext);
   const [avatar, setAvatar] = useState('');
-  const tokenLocal = localStorage.getItem('token');
 
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    const loadAvatar = async () => {
-      try {
-        const { data } = await myApi.get("/users/me/avatar", headersToken(tokenLocal));
-        setAvatar(data);
-      } catch (err) {
-        console.log(err)
-      }
+
+    async function getUser() {
+      const { data: user } = await myApi.get("/users/me", headersToken(localStorage.getItem('token')));
+      setUser(user);
     }
-    const getUser = async () => {
-      try {
-        const { data } = await myApi.get("/users/me", headersToken(tokenLocal));
-        setUser(data);
-      } catch (err) {
-        console.log(err)
-      }
+    async function loadAvatar() {
+      const { data: avatar } = await myApi.get("/users/me/avatar", headersToken(localStorage.getItem('token')));
+      setAvatar(avatar);
     }
-    tokenLocal && getUser();
-    tokenLocal && loadAvatar();
+
+    try {
+      if (!localStorage.getItem('token')) return;
+      getUser();
+      loadAvatar();
+
+    } catch (error) {
+      console.log(error);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tokenLocal])
+  }, [localStorage.getItem('token')])
+
 
   return (
     <header className="header">

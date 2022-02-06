@@ -1,19 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container } from '../components/styles/Container.styled';
-import "./styles/SearchItems.css"
+import { FlexLeft } from '../components/styles/Flex.styled';
+import SearchBar from '../components/SearchBar';
+import Card from '../components/Card';
+import myApi from "../api/Api";
+import "./styles/SearchItems.css";
 
 function SearchItems() {
 
+  const [allProducts, setAllProducts] = useState([]);
+
+  useEffect(() => {
+    const getAllProducts = async () => {
+      try {
+        const { data } = await myApi.get("/products/loadProducts");
+        setAllProducts(data);
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getAllProducts();
+  }, [])
+
+  const renderProducts = () => {
+    return allProducts.map((product) => {
+      return <Card key={product._id} product={product} />
+    })
+  }
+
   return (
     <Container>
-      <div className="search_wrap search_wrap_6">
-        <div className="search_box">
-          <input type="text" className="input" placeholder="search..." />
-          <div className="btn">
-            <p>Search</p>
-          </div>
-        </div>
-      </div>
+      <SearchBar />
+      <FlexLeft>
+        {renderProducts()}
+      </FlexLeft>
     </Container>
   );
 }

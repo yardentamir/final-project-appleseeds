@@ -22,6 +22,7 @@ const productSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
+      required: [true, "Please Enter Phone"],
       validate(value) {
         if (!validator.isMobilePhone(value, ["he-IL"])) {
           throw new Error("Invalid Phone Number");

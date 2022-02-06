@@ -32,14 +32,10 @@ function AddItem() {
   }
 
   const addProduct = async () => {
-    try {
-      if (token) product.user = token;
-      const { data } = await myApi.post("/products/addProduct", product, headersToken(token));
-      setNewProductId(data._id)
-      setIsSubmitted(false);
-    } catch (error) {
-      console.log(error.response.data);
-    }
+    if (token) product.user = token;
+    const { data } = await myApi.post("/products/addProduct", product, headersToken(token));
+    setNewProductId(data._id)
+    setIsSubmitted(false);
   };
 
   const addPicture = useCallback(async () => {
@@ -47,7 +43,6 @@ function AddItem() {
       const data = new FormData();
       data.append("product", pictureContext);
       isSubmitted && await myApi.post(`/products/me/uploadProductImg/${newProductId}`, data, headersToken(token));
-      console.log("did it!")
     } catch (error) {
       console.log(error.response.data);
     }
