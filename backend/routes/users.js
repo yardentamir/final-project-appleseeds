@@ -15,7 +15,7 @@ const {
 rootRouter.post("/addUser", addUser);
 
 rootRouter.get("/me", auth, async (req, res) => {
-  res.send(req.user);
+  res.status(200).send(req.user);
 });
 
 rootRouter.put("/me/updateUser", auth, updateUser);

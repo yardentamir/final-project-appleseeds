@@ -8,6 +8,7 @@ import SignUp from "../pages/SignUp";
 import UpdateUser from "../pages/UpdateUser";
 import AddItem from "../pages/AddItem/AddItem";
 import SearchItems from "../pages/SearchItems";
+import Management from "../pages/Management";
 
 function AppRoutes() {
   return (
@@ -24,6 +25,7 @@ function AppRoutes() {
           </ProductProvider>
         }
       />
+      <Route path="/Management" element={<Management />} />
       <Route path="/SearchItems" element={<SearchItems />} />
     </Routes>
   );

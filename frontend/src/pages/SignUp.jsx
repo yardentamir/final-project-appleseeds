@@ -56,7 +56,7 @@ function SignUp() {
       event.preventDefault();
 
       await addUser()
-      await addAvatar();
+      image && await addAvatar();
 
       navigate("/");
     } catch (err) {

@@ -69,7 +69,6 @@ svg {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem;
   transition: all 0.3s ease-out;
 }
 .left h1 {

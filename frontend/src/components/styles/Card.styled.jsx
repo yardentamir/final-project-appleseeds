@@ -51,6 +51,25 @@ background-color: var(--color-light-gray);
   font-size: 1rem;
 }
 
+a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-p);
+  color: var(--color-white);
+  border: 0;
+  padding: 0.75rem;
+  width: 100%;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+a:hover {
+  background-color: var(--color-dark);
+}
+
 .options span{
   font-weight: 600;
   color: #22215B;

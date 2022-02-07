@@ -1,8 +1,9 @@
-import React, { useState, useContext, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import myApi from "../api/Api";
 import SignUpBanner from "../components/Banner";
 import FromGroup from "../components/FormGroup";
+import Modal from "../components/Modal";
 import { UserContext } from '../providers/user.provider';
 import "./styles/Sign.css";
 
@@ -11,12 +12,14 @@ import { headersToken } from "../utils/functions.utils";
 
 function UpdateUser() {
 
-  const navigate = useNavigate();
   const [currentUserBody, setCurrentUserBody] = useState({});
   const [newUserBody, setNewUserBody] = useState({});
-  const { setUser } = useContext(UserContext);
+  const [isUpdated, setIsUpdated] = useState(false);
   const [avatar, setAvatar] = useState("");
   const [image, setImage] = useState("");
+
+  const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
   const imageUploadRef = useRef(null);
   const token = localStorage.getItem('token');
 
@@ -25,6 +28,7 @@ function UpdateUser() {
       try {
         const { data } = await myApi.get("/users/me", headersToken(token));
         setCurrentUserBody(data);
+
         const { name, email } = data;
         setNewUserBody({ name, email });
       } catch (error) {
@@ -34,7 +38,7 @@ function UpdateUser() {
     token && getUser();
   }, [token]);
 
-  const changeAvatar = useCallback(async () => {
+  const changeAvatar = async () => {
     try {
       const data = new FormData();
       data.append("avatar", avatar);
@@ -42,21 +46,12 @@ function UpdateUser() {
     } catch (error) {
       console.log(error);
     }
-  }, [avatar, token]);
+  };
 
-  useEffect(() => {
-    async function invokeChangeAvatar() {
-      await changeAvatar()
-    }
-    if (token && avatar) invokeChangeAvatar();
-  }, [changeAvatar, token, avatar]);
-
-
-
-  const updateUser = async (e) => {
-    e.preventDefault();
+  const updateUser = async () => {
     try {
       await myApi.put("/users/me/updateUser", newUserBody, headersToken(token));
+      setIsUpdated(true);
     } catch (error) {
       console.log(error.message);
     }
@@ -65,7 +60,12 @@ function UpdateUser() {
   const onSubmit = async (event) => {
     try {
       event.preventDefault();
-      await updateUser(event)
+
+      await updateUser();
+      image && await changeAvatar();
+
+      window.location.reload(true);
+
     } catch (err) {
       console.log(err);
     }
@@ -87,7 +87,6 @@ function UpdateUser() {
     try {
       await myApi.post('/users/logout', { data: {} }, headersToken(token));
       setUser('');
-      // setToken('');
       localStorage.setItem('token', '');
       navigate("/SignIn");
     } catch (err) {
@@ -116,34 +115,35 @@ function UpdateUser() {
   })
 
   return (
-    <div className="wrapper">
-      <div className="left">
-        <div className="sign-up-form">
-          <h2>Update Your Account</h2>
-
-          <form onSubmit={onSubmit}>
-            {renderInputs()}
-            <input type="file" ref={imageUploadRef} className="hidden-upload-file" accept="image/png, image/jpeg" onChange={avatarUpload} />
-            <div id="profile" onClick={() => imageUploadRef.current.click()} style={{ backgroundImage: "url(" + image + ")" }}>
-              <div className="dashes"></div>
-              <label className={image && "hasImage"}>Click to browse an avatar image</label>
+    <Modal condition={isUpdated} onClick={() => setIsUpdated(false)} title="Congratulations" text="You updated your profile successfully!">
+      <div className="wrapper">
+        <div className="left">
+          <div className="sign-up-form">
+            <h2>Update Your Account</h2>
+            <form onSubmit={onSubmit}>
+              {renderInputs()}
+              <input type="file" ref={imageUploadRef} className="hidden-upload-file" accept="image/png, image/jpeg" onChange={avatarUpload} />
+              <div id="profile" onClick={() => imageUploadRef.current.click()} style={{ backgroundImage: "url(" + image + ")" }}>
+                <div className="dashes"></div>
+                <label className={image && "hasImage"}>Click to browse an avatar image</label>
+              </div>
+              <div className="form-group">
+                <button>Update</button>
+              </div>
+            </form>
+            <div className="form-group">
+              <button className="create-aacount" onClick={logout}>Log Out</button>
             </div>
             <div className="form-group">
-              <button>Update</button>
+              <button className="create-aacount" onClick={logoutAll}>Log Out All Devices</button>
             </div>
-          </form>
-          <div className="form-group">
-            <button className="create-aacount" onClick={logout}>Log Out</button>
-          </div>
-          <div className="form-group">
-            <button className="create-aacount" onClick={logoutAll}>Log Out All Devices</button>
           </div>
         </div>
+        <div className="right">
+          <SignUpBanner />
+        </div>
       </div>
-      <div className="right">
-        <SignUpBanner />
-      </div>
-    </div>
+    </Modal>
   );
 }
 

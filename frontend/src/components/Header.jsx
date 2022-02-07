@@ -25,6 +25,7 @@ function Header() {
 
     try {
       if (!localStorage.getItem('token')) return;
+      console.log(user)
       getUser();
       loadAvatar();
 
