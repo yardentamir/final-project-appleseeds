@@ -16,20 +16,23 @@ function Header() {
   useEffect(() => {
 
     async function getUser() {
-      const { data: user } = await myApi.get("/users/me", headersToken(localStorage.getItem('token')));
-      setUser(user);
+      const token = localStorage.getItem('token');
+      const { data } = await myApi.get("/users/me", headersToken(token));
+      setUser(data);
     }
     async function loadAvatar() {
-      const { data: avatar } = await myApi.get("/users/me/avatar", headersToken(localStorage.getItem('token')));
-      setAvatar(avatar);
+      const token = localStorage.getItem('token');
+      const { data } = await myApi.get("/users/me/avatar", headersToken(token));
+      setAvatar(data);
     }
 
     try {
       if (!localStorage.getItem('token')) return;
-      console.log(user)
-      getUser();
-      loadAvatar();
-
+      const invokeUser = async () => {
+        await getUser();
+        await loadAvatar();
+      }
+      invokeUser();
     } catch (error) {
       console.log(error);
     }

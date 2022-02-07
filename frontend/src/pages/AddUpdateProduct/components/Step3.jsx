@@ -1,8 +1,10 @@
 import React, { useState, useRef, useContext, forwardRef, useEffect } from 'react';
 import { ProductContext } from "../../../providers/product.provider";
 import { headersToken } from "../../../utils/functions.utils";
+import { useLocation, useParams } from 'react-router-dom';
 import Modal from "../../../components/Modal";
 import myApi from "../../../api/Api";
+import { Buffer } from 'buffer';
 import "../styles/FormSteps.css";
 
 
@@ -15,18 +17,44 @@ const Step3 = forwardRef(({ jumpToStep }, ref) => {
   const { product } = useContext(ProductContext);
   const imageUploadRef = useRef(null);
   const token = localStorage.getItem('token');
+  const { id } = useParams();
+  const { pathname } = useLocation();
 
 
   const fileUpload = (e) => {
     e.preventDefault();
     const fileReader = new FileReader();
     const file = e.target.files[0];
+    console.log(file)
     fileReader.readAsDataURL(file);
     fileReader.onload = ({ target: { result } }) => {
       setImage(result)
     }
     setPicture(file);
   };
+
+  useEffect(() => {
+    if (!product.picture) return;
+
+    // console.log(product.picture.toString("base64"));
+    // const file = new Blob([new Uint8Array([1, 2, 3, 4]).buffer]);
+    console.log(product.picture)
+    const img = Buffer.from(product.picture);
+
+    const file = new File(product.picture.data, "oneLogo.png", {
+      type: "image/png",
+    });
+    console.log(file)
+    // new Blob([new Uint8Array(product.picture, byteOffset, length)]);
+
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = ({ target: { result } }) => {
+      setImage(result)
+    }
+    setPicture(file);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   async function onFormSubmit() {
     try {
@@ -40,6 +68,12 @@ const Step3 = forwardRef(({ jumpToStep }, ref) => {
 
   const addProduct = async () => {
     if (token) product.user = token;
+    // delete product.picture;
+    // delete product.createdAt;
+    // delete product.updatedAt;
+    // delete product.__v;
+    // delete product._id;
+    console.log(product)
     const { data } = await myApi.post("/products/addProduct", product, headersToken(token));
     setNewProductId(data._id)
   };
@@ -62,7 +96,8 @@ const Step3 = forwardRef(({ jumpToStep }, ref) => {
     newProductId && image && invokeAddPicture();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newProductId])
+  }, [newProductId]);
+
 
   return (
     <Modal condition={newProductId} onClick={() => setNewProductId('')} title="Congratulations" text="You created your post successfully!">

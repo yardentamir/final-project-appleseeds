@@ -26,7 +26,7 @@ function AppRoutes() {
         }
       />
       <Route
-        path="/UpdateProduct"
+        path="/UpdateProduct/:id"
         element={
           <ProductProvider>
             <AddUpdateProduct />

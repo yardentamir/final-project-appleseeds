@@ -65,11 +65,9 @@ const logOut = async (req, res) => {
     });
     await req.user.save();
 
-    res.clearCookie("jwt");
-
     res.send("log out successfully!");
   } catch (error) {
-    res.status(500).send(error.response.data);
+    res.status(500).send(error);
   }
 };
 
@@ -78,11 +76,9 @@ const logOutAll = async (req, res) => {
     req.user.tokens = [];
     await req.user.save();
 
-    res.clearCookie("jwt");
-
     res.send();
   } catch (error) {
-    res.status(500).send(error.response.data);
+    res.status(500).send(error);
   }
 };
 
@@ -99,7 +95,7 @@ const updateUser = async (req, res) => {
       throw new Error("User Not Found");
     }
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).send(error);
   }
 };
 

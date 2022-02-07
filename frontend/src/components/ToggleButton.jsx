@@ -8,10 +8,6 @@ const theme = {
       bg: "var(--white-color)",
       color: "var(--dark-color-alt)"
     },
-    hover: {
-      bg: "#c4c2c2",
-      color: "var(--dark-color-alt)",
-    },
     active: {
       bg: "var(--first-color)",
       color: "var(--white-color)",
@@ -28,8 +24,11 @@ const Button = styled.button`
   font-weight: inherit;
   margin: 10px 5px;
   &:hover {
-    background-color: ${(props) => theme[props.theme].hover.bg};
-    color: ${(props) => theme[props.theme].hover.color};
+    background-color: ${(props) => theme[props.theme].default.bg};
+    ${({ active }) =>
+    active &&
+    ` background-color: ${theme.blue.active.bg};
+    color: ${theme.blue.active.color}`}
   }
   &:disabled {
     cursor: default;

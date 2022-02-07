@@ -4,12 +4,9 @@ import Select from "../../../components/Select";
 import axios from "axios";
 import { ProductContext } from "../../../providers/product.provider";
 
-
 const Step2 = forwardRef(({ jumpToStep }, ref) => {
 
   const [cities, setCities] = useState("");
-  const [city, setCity] = useState("אבו גוש");
-  const [phone, setPhone] = useState("");
   const { setProduct, product } = useContext(ProductContext);
   const inputRef = useRef();
 
@@ -33,20 +30,15 @@ const Step2 = forwardRef(({ jumpToStep }, ref) => {
     }
   }));
 
-  useEffect(() => {
-    setProduct({ ...product, city, phone });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [city, phone])
-
   return (
     <div className="center">
       <div>
         <label htmlFor="type">Choose location:</label>
-        {cities && <Select array={cities} type="cities" onChange={({ target }) => setCity(target.value)} />}
+        {cities && <Select array={cities} type="cities" onChange={({ target }) => setProduct({ ...product, city: target.value })} selected={product.city} />}
       </div>
       <div>
         <label htmlFor="type">Write your phone number:</label>
-        <input type="tel" name="phone" ref={inputRef} placeholder="phone number" pattern="[0-9]" required onChange={({ target }) => { setPhone(target.value); inputRef.current.classList = ""; }} />
+        <input type="tel" name="phone" ref={inputRef} defaultValue={product.phone} placeholder="phone number" pattern="[0-9]" required onChange={({ target }) => { setProduct({ ...product, phone: target.value }); inputRef.current.classList = ""; }} />
       </div>
     </div>
   );

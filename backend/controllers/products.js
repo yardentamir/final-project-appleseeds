@@ -3,14 +3,17 @@ const Product = require("../models/product");
 
 const addProduct = async (req, res) => {
   try {
+    const { id } = req.user;
+
     const product = new Product({
       ...req.body,
-      user: req.user._id,
+      user: id,
     });
+
     await product.save();
     res.status(201).send(product);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).send(error);
   }
 };
 
@@ -19,7 +22,7 @@ const loadProducts = async (req, res) => {
     const products = await Product.find();
     res.status(201).send(products);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send(error);
   }
 };
 
@@ -39,31 +42,59 @@ const uploadProductImg = async (req, res) => {
     await product.save();
     res.status(201).send("upload successfully");
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send(error);
   }
 };
+
+// const loadPicture = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+
+//     const product = await Product.findById(id);
+//     if (!product.picture) res.status(201).send("no image found");
+//     res.set("Content-Type", "image/png");
+
+//     const pictureToBase64 = product.picture.toString("base64");
+
+//     res.status(201).send(pictureToBase64);
+//   } catch (error) {
+//     res.status(404).send(error);
+//   }
+// };
 
 const loadProductsByUserId = async (req, res) => {
   try {
     await req.user.populate("products");
     res.status(201).send(req.user.products);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).send(error);
   }
 };
 
 const deleteProduct = async (req, res) => {
   try {
-    const { id } = req.params;
+    const _id = req.params.id;
 
     const product = await Product.findOneAndDelete({
-      _id: id,
+      _id,
       user: req.user._id,
     });
 
-    if (!product) {
-      res.status(404).send("There is no product with id ");
-    }
+    if (!product) throw new Error("There is no product with id ");
+
+    res.status(201).send(product);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
+const loadProductById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const product = await Product.findById(id);
+
+    if (!product) throw new Error("There is no product with id ");
 
     res.status(201).send(product);
   } catch (error) {
@@ -77,4 +108,5 @@ module.exports = {
   uploadProductImg,
   loadProductsByUserId,
   deleteProduct,
+  loadProductById,
 };
