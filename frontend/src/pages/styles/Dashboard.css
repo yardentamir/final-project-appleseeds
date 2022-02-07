@@ -1,0 +1,10 @@
+.btn-dashboard {
+  max-width: 150px;
+}
+.controllers-wrapper {
+  background-color: var(--color-light-gray);
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 350px;
+  margin-bottom: 15px;
+}

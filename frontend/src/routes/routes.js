@@ -6,9 +6,9 @@ import Home from "../pages/Home";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import UpdateUser from "../pages/UpdateUser";
-import AddItem from "../pages/AddItem/AddItem";
+import AddUpdateProduct from "../pages/AddUpdateProduct/AddUpdateProduct";
 import SearchItems from "../pages/SearchItems";
-import Management from "../pages/Management";
+import Dashboard from "../pages/Dashboard";
 
 function AppRoutes() {
   return (
@@ -18,14 +18,22 @@ function AppRoutes() {
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/UpdateUser" element={<UpdateUser />} />
       <Route
-        path="/AddItem"
+        path="/AddProduct"
         element={
           <ProductProvider>
-            <AddItem />
+            <AddUpdateProduct />
           </ProductProvider>
         }
       />
-      <Route path="/Management" element={<Management />} />
+      <Route
+        path="/UpdateProduct"
+        element={
+          <ProductProvider>
+            <AddUpdateProduct />
+          </ProductProvider>
+        }
+      />
+      <Route path="/Dashboard" element={<Dashboard />} />
       <Route path="/SearchItems" element={<SearchItems />} />
     </Routes>
   );

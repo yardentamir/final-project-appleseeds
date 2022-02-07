@@ -1,6 +1,5 @@
 const sharp = require("sharp");
 const Product = require("../models/product");
-const User = require("../models/user");
 
 const addProduct = async (req, res) => {
   try {
@@ -53,9 +52,29 @@ const loadProductsByUserId = async (req, res) => {
   }
 };
 
+const deleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const product = await Product.findOneAndDelete({
+      _id: id,
+      user: req.user._id,
+    });
+
+    if (!product) {
+      res.status(404).send("There is no product with id ");
+    }
+
+    res.status(201).send(product);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+};
+
 module.exports = {
   addProduct,
   loadProducts,
   uploadProductImg,
   loadProductsByUserId,
+  deleteProduct,
 };

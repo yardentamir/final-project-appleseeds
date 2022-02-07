@@ -4,7 +4,6 @@ import { FlexLeft } from '../components/styles/Flex.styled';
 import SearchBar from '../components/SearchBar';
 import Card from '../components/Card';
 import myApi from "../api/Api";
-import "./styles/SearchItems.css";
 
 function SearchItems() {
 

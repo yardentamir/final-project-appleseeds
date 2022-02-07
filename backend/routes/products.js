@@ -7,6 +7,8 @@ const {
   loadProducts,
   addProduct,
   uploadProductImg,
+  loadProductsByUserId,
+  deleteProduct,
 } = require("../controllers/products");
 
 rootRouter.get("/loadProducts", loadProducts);
@@ -20,6 +22,8 @@ rootRouter.post(
   uploadProductImg
 );
 
-rootRouter.get("/loadProductsByUserId");
+rootRouter.get("/loadProductsByUserId", auth, loadProductsByUserId);
+
+rootRouter.delete("/deleteProduct/:id", auth, deleteProduct);
 
 module.exports = rootRouter;

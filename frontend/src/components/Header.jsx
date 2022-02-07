@@ -10,6 +10,7 @@ function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [avatar, setAvatar] = useState('');
 
+
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
@@ -68,10 +69,10 @@ function Header() {
                 <NavLink to="/" name="Home" className={`nav__link`}>Home</NavLink>
               </li>
               <li className="nav__item">
-                <NavLink to="/AddItem" name="About" className="nav__link">Add Item</NavLink>
+                <NavLink to="/Dashboard" className="nav__link" >Dashboard</NavLink>
               </li>
               <li className="nav__item">
-                <NavLink to="/SearchItems" name="Skills" className="nav__link" >Search Items</NavLink>
+                <NavLink to="/SearchItems" className="nav__link" >Search</NavLink>
               </li>
             </ul>
           </div>

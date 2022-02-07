@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const CardStyled = styled.div`
-width: 25rem;
 height: auto;
 border-radius: 1.5rem;
 padding: 1.5rem;
@@ -16,9 +15,7 @@ background-color: var(--color-light-gray);
 }
 
 .card-img-holder img{
-  width: 100%;
   height: auto;
-  max-height: 15rem;
   object-fit: cover;
   border-radius: 1.5rem;
 }
@@ -78,6 +75,39 @@ a:hover {
 .card-btn{
   font-weight: 400;
   max-width:100px
+}
+
+
+.modal__close {
+  background: none;
+  border: none;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  transition: transform 0.4s ease;
+  padding: 0;
+  width: auto;
+}
+.modal__close p {
+  background-color: red;
+  font-size: 3rem;
+  font-weight: 900;
+  background-image: linear-gradient(
+    45deg,
+    var(--color-dark),
+    var(--first-color),
+    var(--color-dark)
+  );
+  background-size: 100%;
+  background-repeat: repeat;
+  margin: 0;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.modal__close:hover {
+  transform: rotate(90deg);
+  background-color: transparent;
 }
 
 `;

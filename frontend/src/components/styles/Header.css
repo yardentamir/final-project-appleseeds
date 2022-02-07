@@ -89,6 +89,10 @@ a {
   cursor: pointer;
 }
 
+.hidden {
+  display: none;
+}
+
 /*===== NAV =====*/
 @media screen and (max-width: 768px) {
   .header {
