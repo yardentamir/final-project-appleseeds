@@ -7,7 +7,7 @@ import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import UpdateUser from "../pages/UpdateUser";
 import AddUpdateProduct from "../pages/AddUpdateProduct/AddUpdateProduct";
-import SearchItems from "../pages/SearchItems";
+import SearchProducts from "../pages/SearchProducts";
 import Dashboard from "../pages/Dashboard";
 
 function AppRoutes() {
@@ -34,7 +34,7 @@ function AppRoutes() {
         }
       />
       <Route path="/Dashboard" element={<Dashboard />} />
-      <Route path="/SearchItems" element={<SearchItems />} />
+      <Route path="/SearchProducts" element={<SearchProducts />} />
     </Routes>
   );
 }

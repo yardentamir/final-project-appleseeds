@@ -102,6 +102,73 @@ const loadProductById = async (req, res) => {
   }
 };
 
+const updateProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const productBody = req.body;
+
+    const product = await Product.findById(id);
+    if (!product) throw new Error("Product Not Found");
+
+    Object.keys(productBody).forEach((key) => {
+      product[key] = productBody[key];
+    });
+
+    await product.save();
+    res.status(200).send(product);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+const searchProductFun = async (args) => {
+  let products = [];
+  if (!args.length) products = await Product.find();
+  if (args.length === 1) products = await Product.find(args[0]);
+  if (args.length >= 2) products = await Product.find({ $and: [...args] });
+
+  return products;
+};
+
+const searchProduct = async (req, res) => {
+  try {
+    const allQueries = req.query;
+    let args = [];
+
+    for (key in allQueries) {
+      if (req.query[key] === "all") continue;
+      args.push({ [key]: req.query[key] });
+    }
+
+    const response = await searchProductFun(args);
+    res.status(200).send(response);
+  } catch (error) {
+    console.log("Error: ", error);
+    res.send(error);
+  }
+};
+
+const freeSearchProduct = async (req, res) => {
+  try {
+    const { searchInput } = req.params;
+
+    console.log(searchInput);
+    console.log("trying to search");
+    const products = await Product.find({
+      $or: [
+        { city: { $regex: charsIncludes } },
+        { title: { $regex: charsIncludes } },
+        { type: { $regex: charsIncludes } },
+        { description: { $regex: charsIncludes } },
+      ],
+    });
+    res.status(200).send(products);
+  } catch (error) {
+    console.log("catch");
+    res.send(error);
+  }
+};
+
 module.exports = {
   addProduct,
   loadProducts,
@@ -109,4 +176,7 @@ module.exports = {
   loadProductsByUserId,
   deleteProduct,
   loadProductById,
+  updateProduct,
+  searchProduct,
+  freeSearchProduct,
 };

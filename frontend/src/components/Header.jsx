@@ -1,7 +1,7 @@
 
 import { Link, NavLink } from 'react-router-dom';
 import React, { useContext, useState, useEffect } from 'react';
-import { UserContext } from '../providers/user.provider';
+import { GlobalContext } from '../providers/global.provider';
 import { headersToken } from "../utils/functions.utils";
 import myApi from "../api/Api";
 import "./styles/Header.css";
@@ -10,8 +10,7 @@ function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [avatar, setAvatar] = useState('');
 
-
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(GlobalContext);
 
   useEffect(() => {
 
@@ -20,6 +19,7 @@ function Header() {
       const { data } = await myApi.get("/users/me", headersToken(token));
       setUser(data);
     }
+
     async function loadAvatar() {
       const token = localStorage.getItem('token');
       const { data } = await myApi.get("/users/me/avatar", headersToken(token));
@@ -75,7 +75,7 @@ function Header() {
                 <NavLink to="/Dashboard" className="nav__link" >Dashboard</NavLink>
               </li>
               <li className="nav__item">
-                <NavLink to="/SearchItems" className="nav__link" >Search</NavLink>
+                <NavLink to="/SearchProducts" className="nav__link" >Search</NavLink>
               </li>
             </ul>
           </div>

@@ -4,7 +4,7 @@ import myApi from "../api/Api";
 import SignUpBanner from "../components/Banner";
 import FromGroup from "../components/FormGroup";
 import Modal from "../components/Modal";
-import { UserContext } from '../providers/user.provider';
+import { GlobalContext } from '../providers/global.provider';
 import "./styles/Sign.css";
 
 import { INPUT_ATTRIBUTES } from '../constants/signs.constants';
@@ -19,7 +19,7 @@ function UpdateUser() {
   const [image, setImage] = useState("");
 
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useContext(GlobalContext);
   const imageUploadRef = useRef(null);
   const token = localStorage.getItem('token');
 

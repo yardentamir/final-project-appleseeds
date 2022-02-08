@@ -1,0 +1,28 @@
+.parent-search {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.search-bar-container {
+  grid-area: 1 / 1 / 2 / 5;
+}
+.products-container {
+  grid-area: 2 / 1 / 6 / 5;
+}
+.filters-container {
+  grid-area: 2 / 5 / 3 / 6;
+  background-color: var(--color-light-gray);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+@media screen and (max-width: 48rem) {
+  .parent-search {
+    display: block;
+    grid-template-columns: none;
+  }
+
+  .filters-container {
+    margin-bottom: 50px;
+  }
+}

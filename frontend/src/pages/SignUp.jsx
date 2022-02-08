@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import myApi from "../api/Api";
 import SignUpBanner from "../components/Banner";
 import FromGroup from "../components/FormGroup";
-import { UserContext } from '../providers/user.provider';
+import { GlobalContext } from '../providers/global.provider';
 import "./styles/Sign.css";
 
 import { INPUT_ATTRIBUTES } from '../constants/signs.constants';
@@ -18,7 +18,7 @@ function SignUp() {
 
   const navigate = useNavigate();
   const imageUploadRef = useRef(null);
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useContext(GlobalContext);
 
   const addUser = async () => {
     const { data: { user, token } } = await myApi.post("/users/addUser", newUser);

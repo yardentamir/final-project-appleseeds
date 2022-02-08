@@ -4,6 +4,7 @@ import { FlexLeft } from "../components/styles/Flex.styled";
 import { Container } from '../components/styles/Container.styled';
 import { headersToken } from "../utils/functions.utils";
 import Card from "../components/Card";
+import Spinner from "../components/Spinner";
 import myApi from "../api/Api";
 import "./styles/Dashboard.css";
 
@@ -46,7 +47,7 @@ function Dashboard() {
         </Link>
       </div>
       <FlexLeft>
-        {renderProducts()}
+        {allUserProducts.length > 0 ? renderProducts() : <Spinner />}
       </FlexLeft>
     </Container>
   )

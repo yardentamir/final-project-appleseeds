@@ -2,16 +2,16 @@ import React from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import Header from "./components/Header";
-import { UserProvider } from "./providers/user.provider";
+import { GlobalProvider } from "./providers/global.provider";
 import Routes from "./routes/routes";
 
 function App() {
   return (
     <BrowserRouter>
-      <UserProvider>
+      <GlobalProvider>
         <Header />
         <Routes />
-      </UserProvider>
+      </GlobalProvider>
     </BrowserRouter>
   );
 }

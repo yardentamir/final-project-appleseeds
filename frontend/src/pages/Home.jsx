@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Container } from '../components/styles/Container.styled';
 import { FlexAround } from '../components/styles/Flex.styled';
-import keysImage from "../images/pngwing.com.png";
+// import keysImage from "../images/pngwing.com.png";
+import foundDog from "../images/found-dog.png"
+import lostDog from "../images/PikPng.com_pet-png_2063773.png"
+import lostProducts from "../images/PikPng.com_lost-logo-png_4473839.png"
 import "./styles/Home.css";
 
 
@@ -11,7 +15,7 @@ function Home() {
     <div className="full-page">
       <header className="header-of-home-page">
         <Container>
-          <h1>Welcome to the community found lost item</h1>
+          <img src={lostProducts} alt="keys" className="keys-img" width="10%" height="100px" /><h1>Welcome to lost & found</h1>
           <h3>Every one know the feeling of lost but most importantly we know the feeling to give back</h3>
         </Container>
       </header>
@@ -19,14 +23,14 @@ function Home() {
         <Container>
           <FlexAround>
             <div>
-              <p>Omg! Lost my keys!</p>
-              <img src={keysImage} alt="keys" className="keys-img" />
-              <input type="button" value="search here" />
+              <p>Omg! I Lost my dog!</p>
+              <img src={lostDog} alt="keys" className="keys-img" />
+              <Link to="/SearchProducts"><button>search for it here</button></Link>
             </div>
             <div>
-              <p>Omg! found keys!</p>
-              <img src={keysImage} alt="keys" className="keys-img" />
-              <input type="button" value="add item here" />
+              <p>Omg! I found someones dog!</p>
+              <img src={foundDog} alt="keys" className="keys-img" />
+              <Link to="/AddProduct"><button>add product here</button></Link>
             </div>
           </FlexAround>
         </Container>

@@ -1,23 +1,14 @@
-import { useState, useEffect, useContext, forwardRef, useImperativeHandle, useRef } from 'react';
+import { useContext, forwardRef, useImperativeHandle, useRef } from 'react';
 import "../styles/FormSteps.css";
 import Select from "../../../components/Select";
-import axios from "axios";
+import { GlobalContext } from '../../../providers/global.provider';
 import { ProductContext } from "../../../providers/product.provider";
 
 const Step2 = forwardRef(({ jumpToStep }, ref) => {
 
-  const [cities, setCities] = useState("");
   const { setProduct, product } = useContext(ProductContext);
+  const { cities } = useContext(GlobalContext);
   const inputRef = useRef();
-
-  useEffect(() => {
-    const getCities = async () => {
-      const { data } = await axios.get("https://raw.githubusercontent.com/GabMic/israeli-cities-and-streets-list/master/israel_cities_names_and__geometric_data.json");
-      const arrayOfCities = [].concat.apply([], data.map(item => item.name));
-      setCities(arrayOfCities);
-    }
-    getCities();
-  }, []);
 
   useImperativeHandle(ref, () => ({
     isValidated() {

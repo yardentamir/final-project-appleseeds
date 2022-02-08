@@ -31,11 +31,11 @@ flex-wrap: nowrap;
 
 export const FlexAround = styled.div`
 display:flex;
-align-items:center;
 flex-wrap: wrap;
 justify-content: space-around;
 gap: 15px;
 flex-wrap: nowrap;
+align-items: flex-end;
 
 div {
   text-align: center;

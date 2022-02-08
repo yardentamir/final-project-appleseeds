@@ -25,7 +25,6 @@ const Step3 = forwardRef(({ jumpToStep }, ref) => {
     e.preventDefault();
     const fileReader = new FileReader();
     const file = e.target.files[0];
-    console.log(file)
     fileReader.readAsDataURL(file);
     fileReader.onload = ({ target: { result } }) => {
       setImage(result)
@@ -36,44 +35,59 @@ const Step3 = forwardRef(({ jumpToStep }, ref) => {
   useEffect(() => {
     if (!product.picture) return;
 
-    // console.log(product.picture.toString("base64"));
-    // const file = new Blob([new Uint8Array([1, 2, 3, 4]).buffer]);
-    console.log(product.picture)
-    const img = Buffer.from(product.picture);
+    const img = Buffer.from(product.picture).toString("base64");
+    setImage(img)
 
-    const file = new File(product.picture.data, "oneLogo.png", {
-      type: "image/png",
-    });
-    console.log(file)
-    // new Blob([new Uint8Array(product.picture, byteOffset, length)]);
+    // const file = new File(product.picture.data, "oneLogo.png", {
+    //   type: "image/png",
+    // });
+    // console.log(file)
 
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = ({ target: { result } }) => {
-      setImage(result)
-    }
-    setPicture(file);
+    // const fileReader = new FileReader();
+    // fileReader.readAsDataURL(file);
+    // fileReader.onload = ({ target: { result } }) => {
+    //   console.log(result)
+    //   setImage(result)
+    // }
+    // setPicture(file);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   async function onFormSubmit() {
     try {
-      setNewProductId('');
-      await addProduct();
+      if (pathname === "/AddProduct") {
+        setNewProductId('');
+        await addProduct();
+      } else {
+        setNewProductId(id);
+        await updateProduct();
+      }
 
     } catch (err) {
       console.log(err);
     }
   }
 
+  const updateProduct = async () => {
+    if (pathname !== "/AddProduct") {
+      delete product.picture;
+      delete product.createdAt;
+      delete product.updatedAt;
+      delete product.__v;
+      delete product._id;
+    }
+    await myApi.put(`/products/updateProduct/${id}`, product, headersToken(token));
+  }
+
   const addProduct = async () => {
     if (token) product.user = token;
-    // delete product.picture;
-    // delete product.createdAt;
-    // delete product.updatedAt;
-    // delete product.__v;
-    // delete product._id;
-    console.log(product)
+    if (pathname !== "/AddProduct") {
+      delete product.picture;
+      delete product.createdAt;
+      delete product.updatedAt;
+      delete product.__v;
+      delete product._id;
+    }
     const { data } = await myApi.post("/products/addProduct", product, headersToken(token));
     setNewProductId(data._id)
   };
@@ -82,7 +96,7 @@ const Step3 = forwardRef(({ jumpToStep }, ref) => {
     try {
       const data = new FormData();
       data.append("product", picture);
-      await myApi.post(`/products/me/uploadProductImg/${newProductId}`, data, headersToken(token));
+      await myApi.post(`/products/uploadProductImg/${newProductId}`, data, headersToken(token));
     } catch (error) {
       console.log(error.response.data);
     }
@@ -103,7 +117,7 @@ const Step3 = forwardRef(({ jumpToStep }, ref) => {
     <Modal condition={newProductId} onClick={() => setNewProductId('')} title="Congratulations" text="You created your post successfully!">
       <div className="center">
         <input type="file" ref={imageUploadRef} className="hidden-upload-file" accept="image/png, image/jpeg" onChange={fileUpload} />
-        <div id="profile" onClick={() => imageUploadRef.current.click()} style={{ backgroundImage: "url(" + image + ")" }}>
+        <div id="profile" onClick={() => imageUploadRef.current.click()} style={{ backgroundImage: `url(${image.includes("data") ? image : `data:image/png;base64,${image}`})` }}>
           <div className="dashes"></div>
           <label className={image && "hasImage"}>Click to browse the item</label>
         </div>
