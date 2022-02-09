@@ -46,22 +46,6 @@ const uploadProductImg = async (req, res) => {
   }
 };
 
-// const loadPicture = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-
-//     const product = await Product.findById(id);
-//     if (!product.picture) res.status(201).send("no image found");
-//     res.set("Content-Type", "image/png");
-
-//     const pictureToBase64 = product.picture.toString("base64");
-
-//     res.status(201).send(pictureToBase64);
-//   } catch (error) {
-//     res.status(404).send(error);
-//   }
-// };
-
 const loadProductsByUserId = async (req, res) => {
   try {
     await req.user.populate("products");
@@ -148,27 +132,6 @@ const searchProduct = async (req, res) => {
   }
 };
 
-const freeSearchProduct = async (req, res) => {
-  try {
-    const { searchInput } = req.params;
-
-    console.log(searchInput);
-    console.log("trying to search");
-    const products = await Product.find({
-      $or: [
-        { city: { $regex: charsIncludes } },
-        { title: { $regex: charsIncludes } },
-        { type: { $regex: charsIncludes } },
-        { description: { $regex: charsIncludes } },
-      ],
-    });
-    res.status(200).send(products);
-  } catch (error) {
-    console.log("catch");
-    res.send(error);
-  }
-};
-
 module.exports = {
   addProduct,
   loadProducts,
@@ -178,5 +141,4 @@ module.exports = {
   loadProductById,
   updateProduct,
   searchProduct,
-  freeSearchProduct,
 };

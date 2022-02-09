@@ -8,3 +8,15 @@
   max-width: 350px;
   margin-bottom: 15px;
 }
+
+.titles-wrapper {
+  margin: 0 auto;
+  border-radius: 15px;
+  text-align: center;
+  max-width: 750px;
+  margin-bottom: 15px;
+}
+
+.titles-wrapper h3 {
+  color: var(--first-color);
+}

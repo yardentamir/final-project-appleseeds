@@ -77,7 +77,6 @@ a:hover {
   max-width:100px
 }
 
-
 .modal__close {
   background: none;
   border: none;

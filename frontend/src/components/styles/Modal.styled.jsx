@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export const ModalStyled = styled.section`
-.page-modal__header,
-.page-modal__text {
+.page-modal__header {
   font-size: 3rem;
   color: #464646;
   margin: 0 0 2rem;
@@ -11,12 +10,12 @@ export const ModalStyled = styled.section`
 .page-modal__text {
   font-size: 1.2rem;
   margin: 0 0 3rem;
+  text-align: center;
 }
-
-  // height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  
 
 .modal__overlay {
   position: absolute;
@@ -40,13 +39,21 @@ export const ModalStyled = styled.section`
   background: whitesmoke;
   opacity: 1;
   pointer-events: auto;
+  -webkit-transform: translateY(0px);
+  -ms-transform: translateY(0px);
   transform: translateY(0px);
+  -webkit-transition: opacity 0.2s ease, -webkit-transform 0.3s ease;
   transition: opacity 0.2s ease, -webkit-transform 0.3s ease;
+  -o-transition: transform 0.3s ease, opacity 0.2s ease;
   transition: transform 0.3s ease, opacity 0.2s ease;
+  transition: transform 0.3s ease, opacity 0.2s ease,
+    -webkit-transform 0.3s ease;
 }
 .modal__wrapper.hidden {
   opacity: 0;
   pointer-events: none;
+  -webkit-transform: translateY(-50px);
+  -ms-transform: translateY(-50px);
   transform: translateY(-50px);
 }
 .modal__header {
@@ -65,6 +72,8 @@ export const ModalStyled = styled.section`
   transition: transform 0.4s ease;
   padding: 0;
   width: auto;
+  z-index: 2;
+  margin-right: 10px;
 }
 .modal__close p {
   background-color: red;
@@ -81,10 +90,12 @@ export const ModalStyled = styled.section`
   margin: 0;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  z-index: 3;
 }
 .modal__close:hover {
   transform: rotate(90deg);
   background-color: transparent;
+  z-index: 3;
 }
 
 

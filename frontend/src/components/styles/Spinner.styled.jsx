@@ -4,6 +4,7 @@ export const SpinnerStyled = styled.div`
 display: flex;
 align-items: center;
 justify-content: center;
+height: 600px;
 z-index: 5;
 
 .spinner{

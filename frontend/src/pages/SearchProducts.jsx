@@ -14,9 +14,7 @@ function SearchProducts() {
 
   const [allProducts, setAllProducts] = useState([]);
   const [searchedProducts, setSearchProducts] = useState([]);
-  const [type, setType] = useState("all");
-  const [title, setTitle] = useState("all");
-  const [city, setCity] = useState("all");
+  const [filtersTypes, setFilterTypes] = useState({ type: "all", title: "all", city: "all" });
   const [inputVal, setInputVal] = useState("");
 
   const { cities } = useContext(GlobalContext);
@@ -44,10 +42,6 @@ function SearchProducts() {
     })
   }
 
-  const handleInput = ({ target: { value } }) => {
-    setInputVal(value)
-  }
-
   useEffect(() => {
     const timeout = setTimeout(() => {
 
@@ -62,45 +56,41 @@ function SearchProducts() {
     }, 100)
     return () => clearTimeout(timeout)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputVal])
+  }, [inputVal]);
 
-  const searchInDB = async () => {
-
-    const newProducts = allProducts.filter(product => {
-      const { title: productTitle, type: productType, city: productCity } = product
-      return [productTitle, productType, productCity].some(value => {
-        return value === type || value === title || value === city;
-      })
-
-    })
-    console.log(newProducts);
-    setSearchProducts(newProducts)
+  const handelFilters = ({ target: { name, value } }) => {
+    setFilterTypes({ ...filtersTypes, [name]: value });
   }
-  const freeSeachInDB = async () => {
-    const { data: products } = await myApi.get(`/products/search/${inputVal}`)
-    console.log(products);
+
+  const filtersSearchInDB = async ({ target: { name, value } }) => {
+    setFilterTypes({ ...filtersTypes, [name]: value });
+    const { title, city, type } = filtersTypes;
+    console.log(filtersTypes)
+    const { data: products } = await myApi.get(`/products/search?title=${title}&city=${city}&type=${type}`);
+    console.log(products)
+    setSearchProducts(products);
   }
-  console.log(inputVal);
   return (
     <Container>
       <div className="parent-search">
         <div className="search-bar-container">
-          <SearchBar value={inputVal} onChange={handleInput} onClick={searchInDB} />
+          <SearchBar value={inputVal} onChange={({ target }) => setInputVal(target.value)} />
         </div>
         <div className="filters-container">
           <h3>Filters</h3>
           <div>
             <label htmlFor="title">Title</label>
-            <Select array={["all", ...ITEM_TITLES]} type="title" onChange={({ target }) => setTitle(target.value)} />
+            <Select array={["all", ...ITEM_TITLES]} name="title" onChange={handelFilters} />
           </div>
           <div>
             <label htmlFor="type">Type</label>
-            <Select array={["all", ...ITEM_TYPES]} type="type" onChange={({ target }) => setType(target.value)} />
+            <Select array={["all", ...ITEM_TYPES]} name="type" onChange={handelFilters} />
           </div>
           <div>
             <label htmlFor="city">City</label>
-            {cities && <Select array={["all", ...cities]} type="city" onChange={({ target }) => setCity(target.value)} />}
+            {cities && <Select array={["all", ...cities]} name="city" onChange={handelFilters} />}
           </div>
+          <button onClick={filtersSearchInDB}>filter search</button>
         </div>
         <div className="products-container">
           <FlexLeft>

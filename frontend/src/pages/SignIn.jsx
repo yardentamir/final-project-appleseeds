@@ -15,10 +15,21 @@ function SignIn() {
     setLoginDetails({ ...loginDetails, [name]: value });
   }
 
-  const login = async (e) => {
-    e.preventDefault();
+  const login = async () => {
     try {
       const { data: { user, token } } = await myApi.post('/users/login', loginDetails);
+      setUser(user);
+      localStorage.setItem('token', token);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const loginWithAnonymousUser = async () => {
+    try {
+      const anonymousUser = { email: "anonymous@gmail.com", password: "123456789", name: "anonymous" }
+      const { data: { user, token } } = await myApi.post('/users/login', anonymousUser);
       setUser(user);
       localStorage.setItem('token', token);
       navigate("/");
@@ -32,23 +43,23 @@ function SignIn() {
       <div className="left">
         <div className="sign-in-form">
           <h2>Sign in to Find Me</h2>
-
-          <form onSubmit={login}>
-            <div className="form-group">
-              <label htmlFor="email">E-mail</label>
-              <input id="email" type="email" name="email" placeholder="@mail.com" onChange={handleInputChange} />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input id="password" type="password" name="password" placeholder="password" onChange={handleInputChange} />
-            </div>
-            <div className="form-group">
-              <button>SIGN IN</button>
-            </div>
-            <div className="create-aacount">
-              Not registered yet? <Link to="/SignUp"> Create an Account</Link>
-            </div>
-          </form>
+          <div className="form-group">
+            <label htmlFor="email">E-mail</label>
+            <input id="email" type="email" name="email" placeholder="@mail.com" onChange={handleInputChange} />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input id="password" type="password" name="password" placeholder="password" onChange={handleInputChange} />
+          </div>
+          <div className="form-group">
+            <button onClick={login}>SIGN IN</button>
+          </div>
+          <div className="form-group">
+            <button onClick={loginWithAnonymousUser}>SIGN IN ANONYMOUSLY</button>
+          </div>
+          <div className="create-aacount">
+            Not registered yet? <Link to="/SignUp"> Create an Account</Link>
+          </div>
         </div>
       </div>
       <div className="right">

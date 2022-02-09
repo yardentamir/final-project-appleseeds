@@ -11,7 +11,6 @@ const {
   deleteProduct,
   loadProductById,
   updateProduct,
-  freeSearchProduct,
   searchProduct,
 } = require("../controllers/products");
 
@@ -22,7 +21,6 @@ rootRouter.get("/loadProductsByUserId", auth, loadProductsByUserId);
 rootRouter.get("/loadProductById/:id", auth, loadProductById);
 
 rootRouter.get("/search", searchProduct);
-rootRouter.get("/search/:searchInput", freeSearchProduct);
 
 rootRouter.post("/addProduct", auth, addProduct);
 

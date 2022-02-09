@@ -14,7 +14,8 @@ align-items:left;
 flex-wrap: wrap;
 justify-content: center;
 gap: 15px;
-overflow-y: scroll; height:700px;
+overflow-y: scroll;
+max-height: 650px;
 ::-webkit-scrollbar {
   display: none;
 }
@@ -42,7 +43,7 @@ div {
 }
 
 &  * {
-  margin-bottom: 8%;
+  margin-bottom: 2%;
 }
 
  input[type="button"] {

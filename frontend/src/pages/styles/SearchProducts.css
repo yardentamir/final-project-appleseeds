@@ -16,6 +16,10 @@
   border-radius: 15px;
 }
 
+.filters-container button {
+  margin-top: 15px;
+}
+
 @media screen and (max-width: 48rem) {
   .parent-search {
     display: block;

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FlexLeft } from "../components/styles/Flex.styled";
 import { Container } from '../components/styles/Container.styled';
 import { headersToken } from "../utils/functions.utils";
 import Card from "../components/Card";
+import Modal from "../components/Modal";
 import Spinner from "../components/Spinner";
 import myApi from "../api/Api";
 import "./styles/Dashboard.css";
@@ -14,6 +15,7 @@ function Dashboard() {
   const [deletedProduct, setDeletedProduct] = useState({});
 
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getAllProducts = async () => {
@@ -24,7 +26,7 @@ function Dashboard() {
         console.log(err)
       }
     }
-    getAllProducts();
+    token && getAllProducts();
   }, [token, deletedProduct]);
 
   const handleDelete = async ({ target: { id } }) => {
@@ -39,17 +41,22 @@ function Dashboard() {
   }
 
   return (
-    <Container>
-      <div className="controllers-wrapper">
-        <p>add your new lost/found product</p>
-        <Link to="/AddProduct">
-          <button className="btn-dashboard">Add product</button>
-        </Link>
-      </div>
-      <FlexLeft>
-        {allUserProducts.length > 0 ? renderProducts() : <Spinner />}
-      </FlexLeft>
-    </Container>
+    <Modal condition={!token} onClick={() => navigate('/')} title="Please Sign in" text="you must sign in before to post">
+      <Container>
+        <div className="controllers-wrapper">
+          <p>add your new lost/found product</p>
+          <Link to="/AddProduct">
+            <button className="btn-dashboard">Add product</button>
+          </Link>
+        </div>
+        <div className="titles-wrapper">
+          <h3>your lost /founds products that you posted</h3>
+        </div>
+        <FlexLeft>
+          {token ? allUserProducts.length > 0 ? renderProducts() : <Spinner /> : <div></div>}
+        </FlexLeft>
+      </Container>
+    </Modal>
   )
 }
 
