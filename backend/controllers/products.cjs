@@ -1,6 +1,6 @@
 const sharp = require("sharp");
 const Product = require("../models/product.cjs");
-const { searchProductFunc } = require("../services/products.services.cjs");
+// const { searchProductFunc } = require("../services/products.services.cjs");
 
 const addProduct = async (req, res) => {
   try {
@@ -115,6 +115,15 @@ const searchProduct = async (req, res) => {
       if (req.query[key] === "all") continue;
       args.push({ [key]: req.query[key] });
     }
+
+    const searchProductFunc = async (args) => {
+      let products = [];
+      if (!args.length) products = await Product.find();
+      if (args.length === 1) products = await Product.find(args[0]);
+      if (args.length >= 2) products = await Product.find({ $and: [...args] });
+
+      return products;
+    };
 
     const response = await searchProductFunc(args);
     res.status(200).send(response);
