@@ -1,4 +1,4 @@
-const Product = require("../models/product.cjs");
+const Product = require("../models/product");
 
 const searchProductFunc = async (args) => {
   let products = [];
