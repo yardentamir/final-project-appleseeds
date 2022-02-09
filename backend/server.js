@@ -20,6 +20,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/users", userRouter);
 app.use("/products", productRouter);
 
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(publicPath, "index.html"));
+});
+
 app.use("*", (req, res) => {
   res.status(500).send("route is not found");
 });

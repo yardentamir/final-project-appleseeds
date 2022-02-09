@@ -46,10 +46,9 @@ const loadAvatar = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
     const user = await User.findByCredentials(email, password);
     const token = await user.generateAuthToken();
-    console.log({ user, token });
+
     res.send({ user, token });
   } catch (error) {
     res.status(400).send(error);

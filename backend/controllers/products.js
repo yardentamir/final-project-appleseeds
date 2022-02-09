@@ -128,7 +128,6 @@ const searchProduct = async (req, res) => {
     const response = await searchProductFun(args);
     res.status(200).send(response);
   } catch (error) {
-    console.log("Error: ", error);
     res.send(error);
   }
 };
