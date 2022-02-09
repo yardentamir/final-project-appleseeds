@@ -6,9 +6,6 @@
 
 .slanted-div {
   position: relative;
-  /* padding: 300px 0; */
-  /* background: #3664f4; */
-  /* height: 68vh; */
   background: radial-gradient(
     circle at 100% 0%,
     rgba(54, 100, 244, 1) 0%,
@@ -38,9 +35,3 @@
   margin: 0 auto;
   max-width: 40%;
 }
-
-/* .slanted-div:after {
-  bottom: 0;
-  transform-origin: left bottom;
-  transform: skewY(3deg);
-} */

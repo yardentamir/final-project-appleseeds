@@ -1,5 +1,6 @@
 const sharp = require("sharp");
-const Product = require("../models/product");
+const Product = require("../models/product.cjs");
+const { searchProductFunc } = require("../services/products.services.cjs");
 
 const addProduct = async (req, res) => {
   try {
@@ -105,15 +106,6 @@ const updateProduct = async (req, res) => {
   }
 };
 
-const searchProductFun = async (args) => {
-  let products = [];
-  if (!args.length) products = await Product.find();
-  if (args.length === 1) products = await Product.find(args[0]);
-  if (args.length >= 2) products = await Product.find({ $and: [...args] });
-
-  return products;
-};
-
 const searchProduct = async (req, res) => {
   try {
     const allQueries = req.query;
@@ -124,7 +116,7 @@ const searchProduct = async (req, res) => {
       args.push({ [key]: req.query[key] });
     }
 
-    const response = await searchProductFun(args);
+    const response = await searchProductFunc(args);
     res.status(200).send(response);
   } catch (error) {
     console.log("Error: ", error);

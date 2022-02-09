@@ -6,6 +6,7 @@ import FromGroupInput from "../components/FormGroupInput";
 import Modal from "../components/Modal";
 import ImageUpload from "../components/ImageUpload";
 import { GlobalContext } from '../providers/global.provider';
+import { UPDATE_BUTTONS } from "../constants/signs.constants";
 import "./styles/Sign.css";
 
 import { INPUT_ATTRIBUTES } from '../constants/signs.constants';
@@ -58,9 +59,8 @@ function UpdateUser() {
     }
   };
 
-  const onSubmit = async (event) => {
+  const handelUpdate = async () => {
     try {
-      event.preventDefault();
 
       await updateUser();
       image && await changeAvatar();
@@ -113,25 +113,23 @@ function UpdateUser() {
     return <FromGroupInput key={inputAttr.id} {...inputAttr} defaultValue={currentUserBody[inputAttr.id]} onChange={handleInputChange} />
   })
 
+  const renderButtons = () => {
+    const buttonList = UPDATE_BUTTONS([handelUpdate, logout, logoutAll]);
+    return buttonList.map((item) => <div key={item.text} className="form-group">
+      <button onClick={item.function}>{item.text}</button>
+    </div>
+    )
+  }
+
   return (
     <Modal condition={isUpdated} onClick={() => setIsUpdated(false)} title="Congratulations" text="You updated your profile successfully!">
       <div className="wrapper">
         <div className="left">
           <div className="sign-up-form">
             <h2>Update Your Account</h2>
-            <form onSubmit={onSubmit}>
-              {renderInputs()}
-              <ImageUpload imageUploadRef={imageUploadRef} onChange={avatarUpload} image={image} />
-              <div className="form-group">
-                <button>Update</button>
-              </div>
-            </form>
-            <div className="form-group">
-              <button className="create-aacount" onClick={logout}>Log Out</button>
-            </div>
-            <div className="form-group">
-              <button className="create-aacount" onClick={logoutAll}>Log Out All Devices</button>
-            </div>
+            {renderInputs()}
+            <ImageUpload imageUploadRef={imageUploadRef} onChange={avatarUpload} image={image} />
+            {renderButtons()}
           </div>
         </div>
         <div className="right">

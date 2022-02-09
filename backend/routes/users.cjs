@@ -1,7 +1,7 @@
 const express = require("express");
 const rootRouter = express.Router();
-const imgUpload = require("../middleware/img-upload");
-const auth = require("../middleware/auth");
+const imgUpload = require("../middleware/imgUpload.cjs");
+const auth = require("../middleware/auth.cjs");
 const {
   addUser,
   uploadAvatar,

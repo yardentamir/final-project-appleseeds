@@ -1,10 +1,12 @@
 
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import React, { useContext, useState, useEffect } from 'react';
-import { GlobalContext } from '../providers/global.provider';
-import { headersToken } from "../utils/functions.utils";
-import myApi from "../api/Api";
-import "./styles/Header.css";
+import { GlobalContext } from '../../providers/global.provider';
+import { NAVLINK_NAMES } from "../../constants/signs.constants";
+import { headersToken } from "../../utils/functions.utils";
+import UserHead from "./components/UserHead";
+import myApi from "../../api/Api";
+import "../styles/Header.css";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,7 +39,14 @@ function Header() {
       console.log(error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localStorage.getItem('token')])
+  }, [localStorage.getItem('token')]);
+
+
+  const renderNavLinks = () => {
+    return NAVLINK_NAMES.map(item => <li key={item.name} className="nav__item">
+      <NavLink to={item.route} className={`nav__link`}>{item.name}</NavLink>
+    </li>)
+  }
 
 
   return (
@@ -49,34 +58,13 @@ function Header() {
           <ion-icon name="close-outline" onClick={() => setIsOpen(false)} class="nav__close" id="nav-close"></ion-icon>
           {
             user ?
-              <div className="nav__perfil">
-                <div className="nav__img">
-                  {avatar && <img src={`data:image/png;base64,${avatar}`} alt="avatar" />}
-                </div>
-                <div>
-                  <Link to="/UpdateUser">{user.name}</Link>
-                </div>
-              </div>
+              <UserHead text={user.name} link={"UpdateUser"}>{avatar && <img src={`data:image/png;base64,${avatar}`} alt="avatar" />}</UserHead>
               :
-              <div className="nav__perfil">
-                <div className="nav__img">
-                </div>
-                <div>
-                  <Link to="/SignIn" className="nav__name">Sign In</Link>
-                </div>
-              </div>
+              <UserHead text="Sign In" link={"SignIn"} />
           }
           <div className="nav__menu">
             <ul className="nav__list">
-              <li className="nav__item">
-                <NavLink to="/" name="Home" className={`nav__link`}>Home</NavLink>
-              </li>
-              <li className="nav__item">
-                <NavLink to="/Dashboard" className="nav__link" >Dashboard</NavLink>
-              </li>
-              <li className="nav__item">
-                <NavLink to="/SearchProducts" className="nav__link" >Search</NavLink>
-              </li>
+              {renderNavLinks()}
             </ul>
           </div>
         </div>

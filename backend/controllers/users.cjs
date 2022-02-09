@@ -1,9 +1,6 @@
 const sharp = require("sharp");
 const User = require("../models/user");
 
-//utils:  const removeEmptyStrings = (str):str => // some short code that returns the str with not empty strings
-//service: const updateUserToken = (_id , token )=> // some code that can throw errors and make sure that the user is updated and get a new token
-
 const addUser = async (req, res) => {
   try {
     const userBody = req.body;
