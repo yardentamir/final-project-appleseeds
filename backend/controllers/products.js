@@ -106,6 +106,15 @@ const updateProduct = async (req, res) => {
   }
 };
 
+const searchProductFun = async (args) => {
+  let products = [];
+  if (!args.length) products = await Product.find();
+  if (args.length === 1) products = await Product.find(args[0]);
+  if (args.length >= 2) products = await Product.find({ $and: [...args] });
+
+  return products;
+};
+
 const searchProduct = async (req, res) => {
   try {
     const allQueries = req.query;
@@ -115,15 +124,6 @@ const searchProduct = async (req, res) => {
       if (req.query[key] === "all") continue;
       args.push({ [key]: req.query[key] });
     }
-
-    const searchProductFun = async (args) => {
-      let products = [];
-      if (!args.length) products = await Product.find();
-      if (args.length === 1) products = await Product.find(args[0]);
-      if (args.length >= 2) products = await Product.find({ $and: [...args] });
-
-      return products;
-    };
 
     const response = await searchProductFun(args);
     res.status(200).send(response);
