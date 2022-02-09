@@ -1,6 +1,6 @@
 const sharp = require("sharp");
 const Product = require("../models/product");
-// const { searchProductFunc } = require("../services/products.services.cjs");
+// const { searchProductFunc } = require("../services/products.services");
 
 const addProduct = async (req, res) => {
   try {
