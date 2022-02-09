@@ -12,7 +12,5 @@ h2 {
   max-width: 50vw;
   margin: 0 auto;
 }
-
-
 `;
 

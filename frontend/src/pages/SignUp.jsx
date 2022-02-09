@@ -2,7 +2,8 @@ import React, { useState, useRef, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import myApi from "../api/Api";
 import SignUpBanner from "../components/Banner";
-import FromGroup from "../components/FormGroup";
+import FromGroupInput from "../components/FormGroupInput";
+import ImageUpload from "../components/ImageUpload";
 import { GlobalContext } from '../providers/global.provider';
 import "./styles/Sign.css";
 
@@ -48,7 +49,7 @@ function SignUp() {
   };
 
   const renderInputs = () => INPUT_ATTRIBUTES.map(inputAttr => {
-    return <FromGroup key={inputAttr.id} {...inputAttr} onChange={handleInputChange} />
+    return <FromGroupInput key={inputAttr.id} {...inputAttr} onChange={handleInputChange} />
   })
 
   const onSubmit = async (event) => {
@@ -71,11 +72,7 @@ function SignUp() {
           <h2>Sign up to Find Me</h2>
           <form onSubmit={onSubmit}>
             {renderInputs()}
-            <input type="file" ref={imageUploadRef} className="hidden-upload-file" accept="image/png, image/jpeg" onChange={avatarUpload} />
-            <div id="profile" onClick={() => imageUploadRef.current.click()} style={{ backgroundImage: "url(" + image + ")" }}>
-              <div className="dashes"></div>
-              <label className={image && "hasImage"}>Click to browse an avatar image</label>
-            </div>
+            <ImageUpload imageUploadRef={imageUploadRef} onChange={avatarUpload} image={image} />
             <div className="form-group">
               <button>SIGN UP</button>
             </div>

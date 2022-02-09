@@ -3,6 +3,7 @@ import { ProductContext } from "../../../providers/product.provider";
 import { headersToken } from "../../../utils/functions.utils";
 import { useLocation, useParams } from 'react-router-dom';
 import Modal from "../../../components/Modal";
+import ImageUpload from "../../../components/ImageUpload";
 import myApi from "../../../api/Api";
 import { Buffer } from 'buffer';
 import "../styles/FormSteps.css";
@@ -116,11 +117,7 @@ const Step3 = forwardRef(({ jumpToStep }, ref) => {
   return (
     <Modal condition={newProductId} onClick={() => setNewProductId('')} title="Congratulations" text="You created your post successfully!">
       <div className="center">
-        <input type="file" ref={imageUploadRef} className="hidden-upload-file" accept="image/png, image/jpeg" onChange={fileUpload} />
-        <div id="profile" onClick={() => imageUploadRef.current.click()} style={{ backgroundImage: `url(${image.includes("data") ? image : `data:image/png;base64,${image}`})` }}>
-          <div className="dashes"></div>
-          <label className={image && "hasImage"}>Click to browse the item</label>
-        </div>
+        <ImageUpload imageUploadRef={imageUploadRef} onChange={fileUpload} image={image} />
       </div>
       <div className="footer-buttons">
         <button onClick={() => jumpToStep(1)}>Pervious</button>

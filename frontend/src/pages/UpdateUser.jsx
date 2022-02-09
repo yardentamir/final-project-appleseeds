@@ -2,8 +2,9 @@ import React, { useState, useContext, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import myApi from "../api/Api";
 import SignUpBanner from "../components/Banner";
-import FromGroup from "../components/FormGroup";
+import FromGroupInput from "../components/FormGroupInput";
 import Modal from "../components/Modal";
+import ImageUpload from "../components/ImageUpload";
 import { GlobalContext } from '../providers/global.provider';
 import "./styles/Sign.css";
 
@@ -63,7 +64,6 @@ function UpdateUser() {
 
       await updateUser();
       image && await changeAvatar();
-
       window.location.reload(true);
 
     } catch (err) {
@@ -107,11 +107,10 @@ function UpdateUser() {
 
   const handleInputChange = ({ target: { name, value } }) => {
     setNewUserBody({ ...newUserBody, [name]: value });
-    console.log(name, value)
   }
 
   const renderInputs = () => INPUT_ATTRIBUTES.map(inputAttr => {
-    return <FromGroup key={inputAttr.id} {...inputAttr} defaultValue={currentUserBody[inputAttr.id]} onChange={handleInputChange} />
+    return <FromGroupInput key={inputAttr.id} {...inputAttr} defaultValue={currentUserBody[inputAttr.id]} onChange={handleInputChange} />
   })
 
   return (
@@ -122,11 +121,7 @@ function UpdateUser() {
             <h2>Update Your Account</h2>
             <form onSubmit={onSubmit}>
               {renderInputs()}
-              <input type="file" ref={imageUploadRef} className="hidden-upload-file" accept="image/png, image/jpeg" onChange={avatarUpload} />
-              <div id="profile" onClick={() => imageUploadRef.current.click()} style={{ backgroundImage: "url(" + image + ")" }}>
-                <div className="dashes"></div>
-                <label className={image && "hasImage"}>Click to browse an avatar image</label>
-              </div>
+              <ImageUpload imageUploadRef={imageUploadRef} onChange={avatarUpload} image={image} />
               <div className="form-group">
                 <button>Update</button>
               </div>

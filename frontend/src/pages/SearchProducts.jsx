@@ -31,13 +31,8 @@ function SearchProducts() {
     getAllProducts();
   }, [])
 
-  const renderProducts = () => {
-    return allProducts.map((product) => {
-      return <Card key={product._id} product={product} />
-    })
-  }
-  const renderSearchedProducts = () => {
-    return searchedProducts.map((product) => {
+  const renderProducts = (products) => {
+    return products.map((product) => {
       return <Card key={product._id} product={product} />
     })
   }
@@ -94,7 +89,7 @@ function SearchProducts() {
         </div>
         <div className="products-container">
           <FlexLeft>
-            {searchedProducts.length ? renderSearchedProducts() : allProducts.length ? renderProducts() : <Spinner />}
+            {searchedProducts.length ? renderProducts(searchedProducts) : allProducts.length ? renderProducts(allProducts) : <Spinner />}
           </FlexLeft>
         </div>
       </div>
