@@ -104,5 +104,4 @@ module.exports = {
   logOut,
   logOutAll,
   updateUser,
-  sendContactEmail,
 };
