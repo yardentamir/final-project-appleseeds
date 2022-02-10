@@ -48,9 +48,7 @@ function SearchProducts() {
   const filtersSearchInDB = async ({ target: { name, value } }) => {
     setFilterTypes({ ...filtersTypes, [name]: value });
     const { title, city, type } = filtersTypes;
-    console.log(filtersTypes)
     const { data: products } = await myApi.get(`/products/search?title=${title}&city=${city}&type=${type}`);
-    console.log(products)
     setSearchProducts(products);
   }
 
