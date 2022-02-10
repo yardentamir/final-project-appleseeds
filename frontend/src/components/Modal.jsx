@@ -25,8 +25,7 @@ function Modal({ condition, onClick, title, children, text }) {
         </p>
         <p style={{ fontSize: `14px` }}>
           You can close it by clicking on the{" "}
-          <strong>&times;</strong> button, <strong>ESC</strong> key or clicking
-          outside it.</p>
+          <strong>&times;</strong> button.</p>
       </div>
     </ModalStyled>
   );

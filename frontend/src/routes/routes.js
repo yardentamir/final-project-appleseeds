@@ -9,6 +9,7 @@ import UpdateUser from "../pages/UpdateUser";
 import AddUpdateProduct from "../pages/AddUpdateProduct/AddUpdateProduct";
 import SearchProducts from "../pages/SearchProducts";
 import Dashboard from "../pages/Dashboard";
+import AuthRoute from "../routes/auth.route";
 
 function AppRoutes() {
   return (
@@ -16,24 +17,26 @@ function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/SignIn" element={<SignIn />} />
       <Route path="/SignUp" element={<SignUp />} />
-      <Route path="/UpdateUser" element={<UpdateUser />} />
-      <Route
-        path="/AddProduct"
-        element={
-          <ProductProvider>
-            <AddUpdateProduct />
-          </ProductProvider>
-        }
-      />
-      <Route
-        path="/UpdateProduct/:id"
-        element={
-          <ProductProvider>
-            <AddUpdateProduct />
-          </ProductProvider>
-        }
-      />
-      <Route path="/Dashboard" element={<Dashboard />} />
+      <Route element={<AuthRoute />}>
+        <Route path="/UpdateUser" element={<UpdateUser />} />
+        <Route
+          path="/AddProduct"
+          element={
+            <ProductProvider>
+              <AddUpdateProduct />
+            </ProductProvider>
+          }
+        />
+        <Route
+          path="/UpdateProduct/:id"
+          element={
+            <ProductProvider>
+              <AddUpdateProduct />
+            </ProductProvider>
+          }
+        />
+        <Route path="/Dashboard" element={<Dashboard />} />
+      </Route>
       <Route path="/SearchProducts" element={<SearchProducts />} />
     </Routes>
   );

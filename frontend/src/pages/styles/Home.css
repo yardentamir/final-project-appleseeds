@@ -13,6 +13,8 @@
   );
   overflow: visible;
   z-index: 1;
+  bottom: 0%;
+  width: 100%;
 }
 
 .slanted-div:before {
@@ -34,4 +36,10 @@
 .keys-img {
   margin: 0 auto;
   max-width: 40%;
+}
+
+@media screen and (max-width: 68rem) {
+  .keys-img {
+    max-width: 90%;
+  }
 }

@@ -10,6 +10,7 @@ const {
   logOut,
   logOutAll,
   updateUser,
+  sendContactEmail,
 } = require("../controllers/users");
 
 rootRouter.post("/addUser", addUser);
@@ -26,6 +27,8 @@ rootRouter.post(
   imgUpload.single("avatar"),
   uploadAvatar
 );
+
+rootRouter.post("/me/sendContactEmail", auth, sendContactEmail);
 
 rootRouter.get("/me/avatar", auth, loadAvatar);
 

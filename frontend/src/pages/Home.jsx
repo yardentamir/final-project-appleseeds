@@ -19,8 +19,8 @@ function Home() {
         </Container>
       </header>
       <section className="slanted-div">
-        <Container>
-          <FlexAround>
+        <Container div="slanted-div">
+          <FlexAround div="home">
             <div>
               <p>Omg! I Lost my dog!</p>
               <img src={lostDog} alt="keys" className="keys-img" />

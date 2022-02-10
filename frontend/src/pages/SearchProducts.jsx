@@ -68,7 +68,7 @@ function SearchProducts() {
     const filters = FILTERS_ARRAY();
     return filters && filters.map((filter) => {
       return (<div key={filter.name}>
-        <label htmlFor="title">Title</label>
+        <label htmlFor="title">{filter.name}</label>
         <Select array={filter.array} name={filter.name} onChange={handelFilters} />
       </div>)
     })

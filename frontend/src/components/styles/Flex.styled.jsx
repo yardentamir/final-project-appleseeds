@@ -42,9 +42,7 @@ div {
   text-align: center;
 }
 
-&  * {
-  margin-bottom: 2%;
-}
+${({ div }) => div === "home" ? "button {font-size: 16px;}" : ""}
 
  input[type="button"] {
 color: black;

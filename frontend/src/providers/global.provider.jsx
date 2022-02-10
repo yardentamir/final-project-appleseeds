@@ -10,7 +10,7 @@ export function GlobalProvider({ children }) {
   useEffect(() => {
     const getCities = async () => {
       const { data } = await axios.get("https://raw.githubusercontent.com/GabMic/israeli-cities-and-streets-list/master/israel_cities_names_and__geometric_data.json");
-      const arrayOfCities = [].concat.apply([], data.map(item => item.name));
+      const arrayOfCities = data.map(({ english_name, name }) => english_name || name)
       setCities(arrayOfCities);
     }
     getCities();
