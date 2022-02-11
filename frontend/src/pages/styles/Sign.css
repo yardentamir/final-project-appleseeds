@@ -177,3 +177,7 @@ button:hover {
   position: absolute;
   top: -1000px;
 }
+
+.sign-in-form {
+  max-width: 80%;
+}

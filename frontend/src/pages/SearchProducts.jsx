@@ -37,7 +37,6 @@ function SearchProducts() {
         const { title, description, type, city } = product
         return [title, description, type, city].some(value => startWithInputVal.test(value.trim(" ")))
       })
-      console.log(newProducts);
       setSearchProducts(newProducts)
 
     }, 100)
@@ -66,7 +65,7 @@ function SearchProducts() {
     const filters = FILTERS_ARRAY();
     return filters && filters.map((filter) => {
       return (<div key={filter.name}>
-        <label htmlFor="title">{filter.name}</label>
+        <label htmlFor={filter.name}>{filter.name}</label>
         <Select array={filter.array} name={filter.name} onChange={handelFilters} />
       </div>)
     })
@@ -82,7 +81,7 @@ function SearchProducts() {
         <div className="filters-container">
           <h3>Filters</h3>
           {renderFilters()}
-          <button onClick={filtersSearchInDB}>filter search</button>
+          <button onClick={filtersSearchInDB}>FILTER SEARCH</button>
         </div>
         <div className="products-container">
           <FlexLeft>
