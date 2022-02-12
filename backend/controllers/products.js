@@ -50,6 +50,11 @@ const uploadProductImg = async (req, res) => {
 const loadProductsByUserId = async (req, res) => {
   try {
     await req.user.populate("products");
+    if (req.user.products.length === 0) {
+      res.status(201).send("empty");
+      return;
+    }
+
     res.status(201).send(req.user.products);
   } catch (error) {
     res.status(500).send(error);
@@ -119,7 +124,7 @@ const searchProduct = async (req, res) => {
     const response = await searchProductFunc(args);
     res.status(200).send(response);
   } catch (error) {
-    res.send(error);
+    res.status(400).send(error);
   }
 };
 

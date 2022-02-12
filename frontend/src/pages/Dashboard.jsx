@@ -53,7 +53,7 @@ function Dashboard() {
           <h3>your lost /founds products that you posted</h3>
         </div>
         <FlexLeft>
-          {token ? allUserProducts.length > 0 ? renderProducts() : <Spinner /> : <div></div>}
+          {token ? allUserProducts === "empty" ? <div>There is no posts</div> : allUserProducts.length > 0 ? renderProducts() : <Spinner /> : <div></div>}
         </FlexLeft>
       </Container>
     </Modal>

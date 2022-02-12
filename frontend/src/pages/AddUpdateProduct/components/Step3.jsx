@@ -38,21 +38,7 @@ const Step3 = forwardRef(({ jumpToStep }, ref) => {
 
     const img = Buffer.from(product.picture).toString("base64");
     setImage(img)
-
-    // const file = new File(product.picture.data, "oneLogo.png", {
-    //   type: "image/png",
-    // });
-    // console.log(file)
-
-    // const fileReader = new FileReader();
-    // fileReader.readAsDataURL(file);
-    // fileReader.onload = ({ target: { result } }) => {
-    //   console.log(result)
-    //   setImage(result)
-    // }
-    // setPicture(file);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [product.picture])
 
   async function onFormSubmit() {
     try {
