@@ -21,7 +21,7 @@ function AddUpdateProduct() {
 
   useEffect(() => {
 
-    setProduct({ ...product, type: 'keys', description: "", title: ITEM_TITLES[0], city: "אבו גוש", phone: "" });
+    setProduct({ ...product, type: 'keys', description: "", title: ITEM_TITLES[0], city: "abu ghosh", phone: "" });
 
     if (pathname === "/AddProduct") return;
 
