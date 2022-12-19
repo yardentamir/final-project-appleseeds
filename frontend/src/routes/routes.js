@@ -11,16 +11,27 @@ import SearchProducts from "../pages/SearchProducts";
 import Dashboard from "../pages/Dashboard";
 import AuthRoute from "../routes/auth.route";
 
+import {
+  HOME_PATH,
+  SIGN_IN_PATH,
+  SIGN_UP_PATH,
+  UPDATE_USER_PATH,
+  ADD_PRODUCT_PATH,
+  UPDATE_PRODUCT_PATH,
+  DASHBOARD_PATH,
+  SEARCH_PRODUCTS_PATH,
+} from "./routes.constants";
+
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/SignIn" element={<SignIn />} />
-      <Route path="/SignUp" element={<SignUp />} />
+      <Route path={HOME_PATH} element={<Home />} />
+      <Route path={SIGN_IN_PATH} element={<SignIn />} />
+      <Route path={SIGN_UP_PATH} element={<SignUp />} />
       <Route element={<AuthRoute />}>
-        <Route path="/UpdateUser" element={<UpdateUser />} />
+        <Route path={UPDATE_USER_PATH} element={<UpdateUser />} />
         <Route
-          path="/AddProduct"
+          path={ADD_PRODUCT_PATH}
           element={
             <ProductProvider>
               <AddUpdateProduct />
@@ -28,16 +39,16 @@ function AppRoutes() {
           }
         />
         <Route
-          path="/UpdateProduct/:id"
+          path={UPDATE_PRODUCT_PATH + "/:id"}
           element={
             <ProductProvider>
               <AddUpdateProduct />
             </ProductProvider>
           }
         />
-        <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path={DASHBOARD_PATH} element={<Dashboard />} />
       </Route>
-      <Route path="/SearchProducts" element={<SearchProducts />} />
+      <Route path={SEARCH_PRODUCTS_PATH} element={<SearchProducts />} />
     </Routes>
   );
 }

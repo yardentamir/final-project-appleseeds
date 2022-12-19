@@ -12,6 +12,7 @@ import Step3 from "./components/Step3";
 
 import StepZilla from "react-stepzilla";
 import "./styles/FormSteps.css";
+import { ADD_PRODUCT_PATH } from '../../routes/routes.constants';
 
 function AddUpdateProduct() {
 
@@ -23,7 +24,7 @@ function AddUpdateProduct() {
 
     setProduct({ ...product, type: 'keys', description: "", title: ITEM_TITLES[0], city: "abu ghosh", phone: "" });
 
-    if (pathname === "/AddProduct") return;
+    if (pathname === ADD_PRODUCT_PATH) return;
 
     const getProduct = async () => {
       const { data } = await myApi.get(`/products/loadProductById/${id}`, headersToken(localStorage.getItem('token')));

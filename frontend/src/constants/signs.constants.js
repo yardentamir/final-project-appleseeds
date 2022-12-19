@@ -1,3 +1,9 @@
+import {
+  HOME_PATH,
+  DASHBOARD_PATH,
+  SEARCH_PRODUCTS_PATH,
+} from "../routes/routes.constants";
+
 export const INPUT_ATTRIBUTES = [
   { id: "name", name: "name", type: "text" },
   { id: "email", name: "email", type: "email" },
@@ -5,9 +11,9 @@ export const INPUT_ATTRIBUTES = [
 ];
 
 export const NAVLINK_NAMES = [
-  { name: "Home", route: "/" },
-  { name: "Dashboard", route: "/Dashboard" },
-  { name: "Search", route: "/SearchProducts" },
+  { name: "Home", route: HOME_PATH },
+  { name: "Dashboard", route: DASHBOARD_PATH },
+  { name: "Search", route: SEARCH_PRODUCTS_PATH },
 ];
 
 export function UPDATE_BUTTONS(array) {

@@ -8,6 +8,7 @@ import Modal from "../components/Modal";
 import Spinner from "../components/Spinner";
 import myApi from "../api/Api";
 import "./styles/Dashboard.css";
+import { ADD_PRODUCT_PATH, HOME_PATH } from '../routes/routes.constants';
 
 function Dashboard() {
 
@@ -41,11 +42,11 @@ function Dashboard() {
   }
 
   return (
-    <Modal condition={!token} onClick={() => navigate('/')} title="Please Sign in" text="you must sign in before to post">
+    <Modal condition={!token} onClick={() => navigate(HOME_PATH)} title="Please Sign in" text="you must sign in before to post">
       <Container>
         <div className="controllers-wrapper">
           <p>add your new lost/found product</p>
-          <Link to="/AddProduct">
+          <Link to={ADD_PRODUCT_PATH}>
             <button className="btn-dashboard">Add product</button>
           </Link>
         </div>

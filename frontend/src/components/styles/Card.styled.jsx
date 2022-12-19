@@ -11,7 +11,6 @@ background-color: var(--color-light-gray);
 .card-img-holder{
   width: 100%;
   height: auto;
-  position: relative;
 }
 
 .card-img-holder img{
@@ -22,12 +21,15 @@ background-color: var(--color-light-gray);
 
 .lost-found-title{
   color: #22215B;
-  padding: 1rem 0;
-  font-size: 1.5rem;
+  padding: 0.5rem 0;
+  font-size: 1rem;
   text-align: center;
-    background-color: var(--color-mid-gray);
-    border-radius: 15px;
-    color: white
+  position:absolute;
+  top: -20px;
+  left:0;
+  width:100px;
+  background-color: ${({ title }) => title === "lost" ? "#FFCCCB" : "lightgreen"};
+  border-radius: 0 0 20px 0;
 }
 
 .description{

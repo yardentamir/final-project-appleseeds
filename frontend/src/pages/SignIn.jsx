@@ -4,6 +4,7 @@ import LogInBanner from "../components/Banner";
 import { GlobalContext } from '../providers/global.provider';
 import myApi from "../api/Api";
 import "./styles/Sign.css";
+import { HOME_PATH, SIGN_UP_PATH } from '../routes/routes.constants';
 
 function SignIn() {
 
@@ -20,7 +21,7 @@ function SignIn() {
       const { data: { user, token } } = await myApi.post('/users/login', loginDetails);
       setUser(user);
       localStorage.setItem('token', token);
-      navigate("/");
+      navigate(HOME_PATH);
     } catch (err) {
       console.log(err);
     }
@@ -32,7 +33,7 @@ function SignIn() {
       const { data: { user, token } } = await myApi.post('/users/login', anonymousUser);
       setUser(user);
       localStorage.setItem('token', token);
-      navigate("/");
+      navigate(HOME_PATH);
     } catch (err) {
       console.log(err);
     }
@@ -58,7 +59,7 @@ function SignIn() {
             <button onClick={loginWithAnonymousUser}>SIGN IN ANONYMOUSLY</button>
           </div>
           <div className="create-aacount">
-            Not registered yet? <Link to="/SignUp"> Create an Account</Link>
+            Not registered yet? <Link to={SIGN_UP_PATH}> Create an Account</Link>
           </div>
         </div>
       </div>

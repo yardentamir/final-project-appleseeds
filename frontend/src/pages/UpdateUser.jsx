@@ -11,6 +11,7 @@ import "./styles/Sign.css";
 
 import { INPUT_ATTRIBUTES } from '../constants/signs.constants';
 import { headersToken } from "../utils/functions.utils";
+import { SIGN_IN_PATH } from '../routes/routes.constants';
 
 function UpdateUser() {
 
@@ -88,7 +89,7 @@ function UpdateUser() {
       await myApi.post('/users/logout', { data: {} }, headersToken(token));
       setUser('');
       localStorage.setItem('token', '');
-      navigate("/SignIn");
+      navigate(SIGN_IN_PATH);
     } catch (err) {
       console.log(err);
     }
@@ -99,7 +100,7 @@ function UpdateUser() {
       await myApi.post('/users/logoutAll', { data: {} }, headersToken(token));
       setUser('');
       localStorage.setItem('token', '');
-      navigate("/SignIn");
+      navigate(SIGN_IN_PATH);
     } catch (err) {
       console.log(err);
     }

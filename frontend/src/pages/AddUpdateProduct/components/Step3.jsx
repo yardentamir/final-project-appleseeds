@@ -7,6 +7,7 @@ import ImageUpload from "../../../components/ImageUpload";
 import myApi from "../../../api/Api";
 import { Buffer } from 'buffer';
 import "../styles/FormSteps.css";
+import { ADD_PRODUCT_PATH } from '../../../routes/routes.constants';
 
 
 const Step3 = forwardRef(({ jumpToStep }, ref) => {
@@ -42,7 +43,7 @@ const Step3 = forwardRef(({ jumpToStep }, ref) => {
 
   async function onFormSubmit() {
     try {
-      if (pathname === "/AddProduct") {
+      if (pathname === ADD_PRODUCT_PATH) {
         setNewProductId('');
         await addProduct();
       } else {
@@ -56,7 +57,7 @@ const Step3 = forwardRef(({ jumpToStep }, ref) => {
   }
 
   const updateProduct = async () => {
-    if (pathname !== "/AddProduct") {
+    if (pathname !== ADD_PRODUCT_PATH) {
       delete product.picture;
       delete product.createdAt;
       delete product.updatedAt;
@@ -68,7 +69,7 @@ const Step3 = forwardRef(({ jumpToStep }, ref) => {
 
   const addProduct = async () => {
     if (token) product.user = token;
-    if (pathname !== "/AddProduct") {
+    if (pathname !== ADD_PRODUCT_PATH) {
       delete product.picture;
       delete product.createdAt;
       delete product.updatedAt;

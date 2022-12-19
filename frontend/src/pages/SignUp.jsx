@@ -9,6 +9,7 @@ import "./styles/Sign.css";
 
 import { INPUT_ATTRIBUTES } from '../constants/signs.constants';
 import { headersToken } from "../utils/functions.utils";
+import { SIGN_IN_PATH } from '../routes/routes.constants';
 
 
 function SignUp() {
@@ -77,7 +78,7 @@ function SignUp() {
               <button>SIGN UP</button>
             </div>
             <div className="create-aacount">
-              Already registered? <Link to="/SignIn">Sign In</Link>
+              Already registered? <Link to={SIGN_IN_PATH}>Sign In</Link>
             </div>
           </form>
         </div>
